@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'home/base/base-head.html' %}
+<body>
+    <div class="box-center background background-sign">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 offset-lg-3 offset-md-2">
+                    {% block sign-form %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% include 'home/base/base-js.html' %}
+</body>
+</html>
