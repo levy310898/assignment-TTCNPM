@@ -1,0 +1,18 @@
+{% extends 'home/base/base-home.html'%}
+
+{% block content %}
+<div class="container">
+    <h1>test </h1>
+    {% for ques in question %}
+        <h2>{{ques.question}}</h2>
+        <form>
+            <input name="answer" type="radio">{{ques.answerA}}<br>
+            <input name="answer" type="radio">{{ques.answerB}}<br>
+            <input name="answer" type="radio">{{ques.answerC}}<br>
+            <input name="answer" type="radio">{{ques.answerD}}<br>
+        </form>
+
+    {% endfor %}
+    
+</div>
+{% endblock %}
