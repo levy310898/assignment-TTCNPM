@@ -9,3 +9,6 @@ def signIn(request):
 
 def home(request):
     return render(request,'home/home.html')
+
+def myTest(request):
+    return render(request,"home/my-test.html")
