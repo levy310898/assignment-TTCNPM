@@ -22,7 +22,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, "You are now logged in as {username}")
-                return HttpResponseRedirect('/home/home')
+                return HttpResponseRedirect('/home')
             else:
                 messages.info(request, "Invalid username or password.")
         else:
@@ -38,7 +38,7 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home/home')
+            return HttpResponseRedirect('/home')
     return render(request, 'home/sign-up.html', {'form': form})
 
 def home(request):
