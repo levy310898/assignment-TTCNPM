@@ -7,6 +7,9 @@ from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import *
+# Create your views here.
+
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import *
 def login_request(request):
@@ -20,8 +23,6 @@ def login_request(request):
                 login(request, user)
                 messages.info(request, "You are now logged in as {username}")
                 return HttpResponseRedirect('/home/home')
-                
-    
             else:
                 messages.info(request, "Invalid username or password.")
         else:
@@ -39,9 +40,6 @@ def signUp(request):
             form.save()
             return HttpResponseRedirect('/home/home')
     return render(request, 'home/sign-up.html', {'form': form})
-
-def myTest(request):
-    return render(request,'home/my-test.html')
 
 def home(request):
     return render(request,'home/home.html')
