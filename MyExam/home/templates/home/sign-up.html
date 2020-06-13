@@ -1,0 +1,23 @@
+
+
+{% extends 'home/base/base-sign.html' %}
+{% block sign-form %}
+    <div class="signin-form">
+        <div class="signin-icon__box">
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <h1 class="Title mb-2 mt-4">Signin</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% for key.value in form.errors.item %}
+                {{value}}
+            {% endfor %}
+
+            
+            {{form.as_p}}
+            <input type="submit" value="Đăng kí" class="btn btn-primary">
+        </form>
+        
+        </form>
+    </div>
+{% endblock %}
