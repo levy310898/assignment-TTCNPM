@@ -3,19 +3,24 @@
 {% block content %}
 <div class="container">
     <h1>test </h1>
-    <form>
+    <form method="POST">
+        {% csrf_token %}
         {% for ques in question %}
             <h2>{{ques.question}}</h2>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerA}}">
+                <input name="{{ques.question}}" type="radio" id="{{ques.answerA}}" value="A">
                 <label for="{{ques.answerA}}">{{ques.answerA}}</label><br>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerB}}">
+
+                <input name="{{ques.question}}" type="radio" id="{{ques.answerB}}" value="B">
                 <label for="{{ques.answerB}}">{{ques.answerB}}</label><br>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerC}}">
+
+                <input name="{{ques.question}}" type="radio" id="{{ques.answerC}}" value="C">
                 <label for="{{ques.answerC}}">{{ques.answerC}}</label><br>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerD}}">
+
+                <input name="{{ques.question}}" type="radio" id="{{ques.answerD}}" value="D">
                 <label for="{{ques.answerD}}">{{ques.answerD}}</label><br>
 
         {% endfor %}
+
         <button type="submit">Submit</button>
     </form>
     

@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
+from django.contrib.auth.models import User
 # Create your views here.
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
@@ -48,4 +49,23 @@ def doTest(request, exam_name):
     context = {
         'question' : ques,
     }
+    if request.method == 'POST':
+        corrAns = []
+        chooseAns = []
+        no_corr_chooseAns = 0
+        for q in ques:
+            corrAns.append(q.corrAns)
+            if q.question in request.POST:
+                chooseAns.append(request.POST[q.question])
+            else:
+                chooseAns.append("")
+        for i in range(len(chooseAns)):
+            if chooseAns[i] == corrAns[i]:
+                no_corr_chooseAns += 1
+        point = Point()
+        user = User.objects.get(username = 'user')
+        point.key1 = user
+        point.key2 = exam
+        point.point = no_corr_chooseAns
+        point.save()
     return render(request,'home/do-test.html',context)
