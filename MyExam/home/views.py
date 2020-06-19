@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import render
 
 from .forms import RegistrationForm
-from django.http import HttpResponsePermanentRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -23,14 +23,18 @@ def login_request(request):
                 login(request, user)
                 messages.info(request, "You are now logged in as {username}")
                 return HttpResponseRedirect('/home')
+                # return home(request,user.id)
             else:
                 messages.info(request, "Invalid username or password.")
         else:
             messages.info(request, "Invalid username or password.")
     form = AuthenticationForm()
     return render(request, 'home/sign-in.html', {"form":form})
-def home(request):
-    return render(request,'home/home.html')
+# def home(request):
+#     return render(request,'home/home.html')
+
+def admin(request):
+    return HttpResponse('/admin')
 
 def signUp(request):
     form = RegistrationForm()
@@ -38,11 +42,11 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home')
+            return HttpResponseRedirect('/home',{"user_id":form.id})
     return render(request, 'home/sign-up.html', {'form': form})
 
-def home(request):
-    return render(request,'home/home.html')
+def home(request,user_id):
+    return render(request,'home/home.html',{"user_id":user_id})
 
 def myTest(request):
     return render(request,"home/my-test.html")

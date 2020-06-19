@@ -11,19 +11,24 @@
                 {{value}}
             {% endfor %}
 
-            <div class="form-group">
-            <p><label for="username">Username:</label>{{form.username}}<p>
+            <div class="form-group mt-4">
+            <!-- <p><label for="username">Username:</label>{{form.username}}<p> -->
+            <input type="text" name= "username"
+            class="form-control" autocomplete="username" placeholder="Enter username"
+            required id="id_username">
             
             </div>
-            <div class="form-group">
-            <p><label for="pwd">Password:</label>{{form.password}}<p>
+            <div class="form-group mt-4">
+            <!-- <p><label for="pwd">Password:</label>{{form.password}}<p> -->
+            <input type="password" class="form-control" placeholder="Enter password" name="password" autocomplete="current-password" required id="id_password">
             
             </div>
             <div class="d-flex">
-                <input type="submit" value="Đăng nhập" class="btn btn-primary">
-                <a href="{% url 'sign-up' %}" class="btn btn-success ml-auto"> Đăng ký</a>
+                <input type="submit" value="Đăng nhập" class="btn btn-primary px-4 py-2">
+                <a href="{% url 'sign-up' %}" class="btn btn-success ml-auto px-4 py-2"> Đăng ký</a>
             </div>
-        
+            
+            <a class="link-admin" href="{% url 'admin' %}">Đăng nhập dưới tư cách admin?</a>
         </form>
     </div>
 {% endblock %}

@@ -164,3 +164,9 @@
     display:flex;
     justify-content: space-between;
 }
+
+.link-admin{
+    display:block !important;
+    margin-top: 20px !important;
+
+}
