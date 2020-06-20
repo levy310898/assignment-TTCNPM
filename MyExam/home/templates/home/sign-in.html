@@ -1,5 +1,10 @@
 {% extends 'home/base/base-sign.html' %}
 {% block sign-form %}
+    {% if 'error' in context %}
+    <h1> {{context.error}} </h1>
+    {%else%}
+    <h1> Nothing</h1>
+    {% endif %}
     <div class="login-form">
         <div class="login-icon__box">
             <i class="fas fa-user-tie"></i>

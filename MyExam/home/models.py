@@ -26,3 +26,9 @@ class Point(models.Model):
     key1 = models.ForeignKey(User, on_delete = models.CASCADE)
     key2 = models.ForeignKey(Exam, on_delete= models.CASCADE)
     point = models.DecimalField(max_digits= 2, decimal_places= 0, default= 0)
+
+# class Info(models.Model):
+#     key = models.ForeignKey( User ,on_delete = models.CASCADE)
+#     fullName = models.TextField(max_length=50, default="")
+#     sex = models.BooleanField(default= False)
+#     birthDate = models.TextField(ma)
