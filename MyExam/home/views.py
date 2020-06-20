@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -58,7 +57,7 @@ def signUp(request):
             return HttpResponseRedirect('/home/user=%s/' % request.POST['username'])
     return render(request, 'home/sign-up.html', {'form': form})
 
-def home(LoginRequiredMixin,request,username):
+def home(request,username):
     # return render(request,"home/home.html")
     user = User.objects.get(username = username)
     exams = Exam.objects.all()
