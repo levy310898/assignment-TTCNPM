@@ -1,6 +1,6 @@
 {% extends 'home/base/base-home.html'%}
 {% block name %}
-Le Ho Vy
+{{ context.user.first_name }} {{ context.user.last_name }}
 {% endblock %}
 
 {% block my-test %}
@@ -10,8 +10,8 @@ Le Ho Vy
 
 {% block content %}
     <div class="container">
-        {% if "user_name" in context %}
-            <h1>{{ context.user_name }}</h1>
+        {% if "user" in context %}
+            <h1>{{ context.user.username }}</h1>
         {% endif %}
 
         <!-- {% for exam in context.exams %}

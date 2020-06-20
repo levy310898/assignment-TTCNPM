@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
+
 # Create your views here.
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -28,8 +29,16 @@ def login_request(request):
                 # return home(request,username)
                 return HttpResponseRedirect('/home/user=%s/' % username)
             else:
-                messages.info(request, "Invalid username or password.")
+                # print('error')
+                # form = AuthenticationForm()
+                # context = {"error": "Invalid username or password.", "form":form}
+                # return render(request, 'home/sign-in.html', {"context":context})
+                messages.info(request, "we dont have that user")
         else:
+            print('error')
+            form = AuthenticationForm()
+            context = {"error": "Invalid username or password.", "form":form}
+            return render(request, 'home/sign-in.html', {"context":context})
             messages.info(request, "Invalid username or password.")
     form = AuthenticationForm()
     return render(request, 'home/sign-in.html', {"form":form})
@@ -45,11 +54,12 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home')
+            return HttpResponseRedirect('/home/user=%s/' % request.POST['username'])
     return render(request, 'home/sign-up.html', {'form': form})
 
 def home(request,username):
     # return render(request,"home/home.html")
+    user = User.objects.get(username = username)
     exams = Exam.objects.all()
     exams_context = []
     for exam in exams:
@@ -74,7 +84,7 @@ def home(request,username):
         })    
     
     context = {
-        "user_name":username,
+        "user":user,
         "exams" : exams_context,
     }
     return render(request,'home/home.html',{"context":context})
@@ -107,4 +117,5 @@ def doTest(request, username, exam_name):
         point.key2 = exam
         point.point = no_corr_chooseAns
         point.save()
+        return HttpResponseRedirect('/home/user=%s/' % username)
     return render(request,'home/do-test.html',context)
