@@ -29,11 +29,11 @@ def login_request(request):
                 # return home(request,username)
                 return HttpResponseRedirect('/home/user=%s/' % username)
             else:
-                print('error')
-                form = AuthenticationForm()
-                context = {"error": "Invalid username or password.", "form":form}
-                return render(request, 'home/sign-in.html', {"context":context})
-                messages.info(request, "Invalid username or password.")
+                # print('error')
+                # form = AuthenticationForm()
+                # context = {"error": "Invalid username or password.", "form":form}
+                # return render(request, 'home/sign-in.html', {"context":context})
+                messages.info(request, "we dont have that user")
         else:
             print('error')
             form = AuthenticationForm()
@@ -66,7 +66,7 @@ def home(request,username):
         creator = exam.key
         score_obj = []
         # score_obj = Point.objects.get(key1 = creator, key2 = exam)
-        for score in Point.objects.filter(key1 = creator, key2 = exam):
+        for score in Point.objects.filter(key1 = user, key2 = exam):
             score_obj.append(score)
         print(score_obj)
         score = None
@@ -117,4 +117,5 @@ def doTest(request, username, exam_name):
         point.key2 = exam
         point.point = no_corr_chooseAns
         point.save()
+        return HttpResponseRedirect('/home/user=%s/' % username)
     return render(request,'home/do-test.html',context)

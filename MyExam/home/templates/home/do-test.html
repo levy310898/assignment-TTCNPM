@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1 class="text-center">{{exam_name}}</h1>
-    <form method="POST">
+    <form method="POST" >
         {% csrf_token %}
         {% for ques in question %}
         <div class="question-box">
