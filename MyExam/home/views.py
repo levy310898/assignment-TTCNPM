@@ -56,7 +56,7 @@ def home(request,username):
         creator = exam.key
         score_obj = []
         # score_obj = Point.objects.get(key1 = creator, key2 = exam)
-        for score in Point.objects.filter(key1 = creator, key2 = exam):
+        for score in Point.objects.filter(key1 = user, key2 = exam):
             score_obj.append(score)
         print(score_obj)
         score = None
