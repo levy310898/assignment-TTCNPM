@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
+from django.contrib.auth.models import User
 # Create your views here.
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -22,8 +23,8 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, "You are now logged in as {username}")
+                print(user.username)
                 return HttpResponseRedirect('/home')
-                # return home(request,user.id)
             else:
                 messages.info(request, "Invalid username or password.")
         else:
@@ -42,11 +43,11 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home',{"user_id":form.id})
+            return HttpResponseRedirect('/home')
     return render(request, 'home/sign-up.html', {'form': form})
 
-def home(request,user_id):
-    return render(request,'home/home.html',{"user_id":user_id})
+def home(request):
+    return render(request,'home/home.html')
 
 def myTest(request):
     return render(request,"home/my-test.html")
@@ -54,6 +55,26 @@ def doTest(request, exam_name):
     exam = Exam.objects.get(examName = exam_name) #get the exam
     ques = list(Question.objects.filter(key = exam.id)) #find all of the question related to that exam
     context = {
+        "exam_name":exam_name,
         'question' : ques,
     }
+    if request.method == 'POST':
+        corrAns = []
+        chooseAns = []
+        no_corr_chooseAns = 0
+        for q in ques:
+            corrAns.append(q.corrAns)
+            if q.question in request.POST:
+                chooseAns.append(request.POST[q.question])
+            else:
+                chooseAns.append("")
+        for i in range(len(chooseAns)):
+            if chooseAns[i] == corrAns[i]:
+                no_corr_chooseAns += 1
+        point = Point()
+        user = User.objects.get(username = 'user')
+        point.key1 = user
+        point.key2 = exam
+        point.point = no_corr_chooseAns
+        point.save()
     return render(request,'home/do-test.html',context)

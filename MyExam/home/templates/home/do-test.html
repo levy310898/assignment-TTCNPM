@@ -2,21 +2,53 @@
 
 {% block content %}
 <div class="container">
-    <h1>test </h1>
-    <form>
+    <h1 class="text-center">{{exam_name}}</h1>
+    <form method="POST">
+        {% csrf_token %}
         {% for ques in question %}
+        <div class="question-box">
             <h2>{{ques.question}}</h2>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerA}}">
-                <label for="{{ques.answerA}}">{{ques.answerA}}</label><br>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerB}}">
-                <label for="{{ques.answerB}}">{{ques.answerB}}</label><br>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerC}}">
-                <label for="{{ques.answerC}}">{{ques.answerC}}</label><br>
-                <input name="{{ques.question}}" type="radio" id="{{ques.answerD}}">
-                <label for="{{ques.answerD}}">{{ques.answerD}}</label><br>
+                <!-- <input name="{{ques.question}}" type="radio" id="{{ques.answerA}}" value="A">
+                <label for="{{ques.answerA}}">{{ques.answerA}}</label><br> -->
+                <div class="form-check" for="{{ques.answerA}}">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="{{ques.question}}" id="{{ques.answerA}}" value="A">{{ques.answerA}}
+                    </label>
+                </div>
 
+                <div class="form-check" for="{{ques.answerB}}">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="{{ques.question}}" id="{{ques.answerB}}" value="A">{{ques.answerB}}
+                    </label>
+                </div>
+
+                <div class="form-check" for="{{ques.answerC}}">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="{{ques.question}}" id="{{ques.answerC}}" value="C">{{ques.answerC}}
+                    </label>
+                </div>
+
+                <div class="form-check" for="{{ques.answerD}}">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="{{ques.question}}" id="{{ques.answerD}}" value="D">{{ques.answerD}}
+                    </label>
+                </div>
+                <!-- <input name="{{ques.question}}" type="radio" id="{{ques.answerB}}" value="B">
+                <label for="{{ques.answerB}}">{{ques.answerB}}</label><br>
+
+                <input name="{{ques.question}}" type="radio" id="{{ques.answerC}}" value="C">
+                <label for="{{ques.answerC}}">{{ques.answerC}}</label><br>
+
+                <input name="{{ques.question}}" type="radio" id="{{ques.answerD}}" value="D">
+                <label for="{{ques.answerD}}">{{ques.answerD}}</label><br> -->
+
+        </div>
+            
         {% endfor %}
-        <button type="submit">Submit</button>
+        <div class="d-flex mt-4 justify-content-end">
+            <button type="submit" class="btn btn-primary px-5 py-2">Hoàn thành bài làm</button>
+        </div>
+        
     </form>
     
 </div>
