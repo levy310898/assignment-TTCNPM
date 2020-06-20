@@ -1,31 +1,42 @@
 {% extends 'home/base/base-home.html'%}
+{% block name %}
+Le Ho Vy
+{% endblock %}
+
+{% block my-test %}
+
+
+{% endblock %}
 
 {% block content %}
     <div class="container">
+        {% if "user_name" in context %}
+            <h1>{{ context.user_name }}</h1>
+        {% endif %}
+
+        <!-- {% for exam in context.exams %}
+            <h2> ceator test: {{exam.user_name}}</h2>
+            <h2> test name: {{exam.exam}}</h2>
+            <h2>test point: {{exam.score}}</h2>
+        {% endfor %} -->
         <div class="test-section">
-            <div class="test-component">
-                <a href="Exam 1" class="test-name">bài kiểm tra thứ nhất</a>
+            <!-- <div class="test-component">
+                <a href="exam=Exam 1" class="test-name">bài kiểm tra thứ nhất</a>
                 <div class="test-info">
                     <p class="test-owner">le ho vy</p>
                     <p class="test-date">5/6/2020</p>
                 </div>
-            </div>
+            </div> -->
 
+            {% for exam in context.exams %}
             <div class="test-component">
-                <a href="addihadsiu" class="test-name">bài kiểm tra thứ nhất</a>
+                <a href="exam={{ exam.exam }}" class="test-name">{{exam.exam}}</a>
                 <div class="test-info">
-                    <p class="test-owner">le ho vy</p>
-                    <p class="test-date">5/6/2020</p>
+                    <p class="test-owner">Người tạo: {{exam.user_name}}</p>
+                    <p class="test-date">{{exam.score}}</p>
                 </div>
             </div>
-
-            <div class="test-component">
-                <a href="" class="test-name">bài kiểm tra thứ nhất</a>
-                <div class="test-info">
-                    <p class="test-owner">le ho vy</p>
-                    <p class="test-date">5/6/2020</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

@@ -24,7 +24,9 @@ def login_request(request):
                 login(request, user)
                 messages.info(request, "You are now logged in as {username}")
                 print(user.username)
-                return HttpResponseRedirect('/home')
+                # return HttpResponseRedirect("/home")
+                # return home(request,username)
+                return HttpResponseRedirect('/home/user=%s/' % username)
             else:
                 messages.info(request, "Invalid username or password.")
         else:
@@ -46,12 +48,40 @@ def signUp(request):
             return HttpResponseRedirect('/home')
     return render(request, 'home/sign-up.html', {'form': form})
 
-def home(request):
-    return render(request,'home/home.html')
+def home(request,username):
+    # return render(request,"home/home.html")
+    exams = Exam.objects.all()
+    exams_context = []
+    for exam in exams:
+        creator = exam.key
+        score_obj = []
+        # score_obj = Point.objects.get(key1 = creator, key2 = exam)
+        for score in Point.objects.filter(key1 = creator, key2 = exam):
+            score_obj.append(score)
+        print(score_obj)
+        score = None
+        if score_obj ==[]:
+            score = "chua lam"
+        else:
+            scores = []
+            for item in score_obj:
+                scores.append(item.point)
+            score = max(scores)
+        exams_context.append({
+            "user_name":creator.username,
+            "exam":exam.examName,
+            "score":score,
+        })    
+    
+    context = {
+        "user_name":username,
+        "exams" : exams_context,
+    }
+    return render(request,'home/home.html',{"context":context})
 
 def myTest(request):
     return render(request,"home/my-test.html")
-def doTest(request, exam_name):
+def doTest(request, username, exam_name):
     exam = Exam.objects.get(examName = exam_name) #get the exam
     ques = list(Question.objects.filter(key = exam.id)) #find all of the question related to that exam
     context = {
@@ -72,7 +102,7 @@ def doTest(request, exam_name):
             if chooseAns[i] == corrAns[i]:
                 no_corr_chooseAns += 1
         point = Point()
-        user = User.objects.get(username = 'user')
+        user = User.objects.get(username = username)
         point.key1 = user
         point.key2 = exam
         point.point = no_corr_chooseAns

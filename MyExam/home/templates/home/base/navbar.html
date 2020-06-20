@@ -3,13 +3,13 @@
         <a href="" class="nav-brand">MyExam</a>
         <div class="user-icon">
             <div class="user-icon__img"></div>
-            <p class="user-icon__name">Lê Hồ Vỹ</p>
+            <p class="user-icon__name">{% block name %} {% endblock %}</p>
             <ul class="user-menu">
                 <li class="user-item">
                     <a href="" class="user-link">Thay đổi thông tin cá nhân</a>
                 </li>
                 <li class="user-item">
-                    <a href="" class="user-link">Bài kiểm tra của tôi</a>
+                    <a href="{%block my-test%}  {% endblock %}" class="user-link">Bài kiểm tra của tôi</a>
                 </li>
                 <li class="user-item">
                     <a href="" class="user-link">Đổi mật khẩu</a>
