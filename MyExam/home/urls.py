@@ -9,6 +9,7 @@ urlpatterns = [
     path('home/user=<str:username>/exam=<str:exam_name>/', views.doTest, name= "do-test"),
     path('admin/',views.admin,name="admin"),
     path('',views.logout, {'next/page':'/'}, name='logout'),
+    path('home/user=<str:username>/info/', views.info, name='info'),
     path('home/user=<str:username>/change-password/', views.change_password, name='change-password'),
 ]
 
