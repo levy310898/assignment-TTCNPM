@@ -11,17 +11,15 @@
                 <p class="user-icon__name">{% block name %} {% endblock %}</p>
                 <ul class="user-menu">
                     <li class="user-item">
-                        <a href="{%block change-info%}  {% endblock %}" class="user-link">Thay đổi thông tin cá nhân</a>
+                        <a href="info" class="user-link">Thay đổi thông tin cá nhân</a>
+                        <!-- <a href="{%block change-info%}  {% endblock %}" class="user-link">Thay đổi thông tin cá nhân</a> -->
                     </li>
                     <li class="user-item">
                         <a href="{% block list-test %}  {% endblock %}" class="user-link">Bài kiểm tra của tôi</a>
                     </li>
                     <li class="user-item">
-<<<<<<< HEAD
                         <a href="change-password" class="user-link">Đổi mật khẩu</a>
-=======
-                        <a href="{%block change-pass%}  {% endblock %}" class="user-link">Đổi mật khẩu</a>
->>>>>>> 4da4f179a7952f88200dde882f8877cfc843d6bc
+                        <!-- <a href="{%block change-pass%}  {% endblock %}" class="user-link">Đổi mật khẩu</a> -->
                     </li>
                     <li class="user-item">
                         <a href="{% url 'logout'%}" class="user-link">Đăng xuất</a>
