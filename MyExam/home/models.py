@@ -25,14 +25,18 @@ class Question(models.Model):
 class Point(models.Model):
     key1 = models.ForeignKey(User, on_delete = models.CASCADE)
     key2 = models.ForeignKey(Exam, on_delete= models.CASCADE)
-    point = models.DecimalField(max_digits= 2, decimal_places= 0, default= 0)
+    point = models.DecimalField(max_digits= 4, decimal_places= 2, default= 0)
 
     name = "Ng lam bai: {}, Bai: {}, Diem: {}"
     def __str__(self):
         return self.name.format(self.key1, self.key2, self.point)
 
-# class Info(models.Model):
-#     key = models.ForeignKey( User ,on_delete = models.CASCADE)
-#     fullName = models.TextField(max_length=50, default="")
-#     sex = models.BooleanField(default= False)
-#     birthDate = models.TextField(ma)
+class Info(models.Model):
+    sex = models.TextField(max_length=6, default="")
+    key = models.ForeignKey( User ,on_delete = models.CASCADE)
+    birthDate = models.DateField(null= True)
+    address = models.TextField(max_length=100, default="")
+    
+    name = "Info of {}"
+    def __str__(self):
+        return self.name.format(self.key)

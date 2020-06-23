@@ -1,0 +1,50 @@
+{% extends "home/base/base-home.html" %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+<h1>Tên: </h1> 
+<input type="text" name="firstName" value="{{firstName}}" placeholder="Nhập tên mới">
+<h1>Họ: </h1>
+<input type="text" name="lastName" value="{{lastName}}" placeholder="Nhập họ mới">
+<h1>Giới tính: </h1>
+{% if sex == "Nam" %}
+<label> <input type="radio" name="sex" value="Nam" checked> Nam</label>
+<label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
+{% elif sex == "Nữ" %}
+<label> <input type="radio" name="sex" value="Nam"> Nam</label>
+<label> <input type="radio" name="sex" value="Nữ" checked> Nữ </label>
+{% else %}
+<label> <input type="radio" name="sex" value="Nam"> Nam</label>
+<label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
+{% endif %}
+<h1>Ngày sinh: {{birthDate}}</h1>
+<input type="date" name="birthDate" value="{{birthDate|date:"Y-m-d"}}">
+<h1>Địa chỉ: </h1>
+<input type="text" name="address" value="{{address}}">
+<input type="submit" value="Cập nhập">
+</form>
+{% endblock %}
+    <!-- <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-success px-5 py-2" data-toggle="modal" data-target="#NameModal">Chỉnh sửa họ và tên </a>
+    
+    </div>
+    <div class="modal fade" id="NameModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          
+             Modal Header
+            <form method="POST" class="p-3">
+                {% csrf_token %}
+                <div class="form-group">
+                    <h2 class="text-center">Nhập họ tên mới</h2>
+                    <input type="text" class="form-control" name="firstName" value="{{firstName}}" placeholder="Nhập tên mới">
+                    <input type="text" class="form-control" name="lastName" value="{{lastName}}" placeholder="Nhập họ mới">
+                  </div>
+                  <div class="d-flex justify-content-center">
+                      <input type="submit" name="nameUpdate" value="Cập nhập" class="btn btn-success">
+                  </div>
+            </form>
+            
+          </div>
+        </div>
+    </div> -->

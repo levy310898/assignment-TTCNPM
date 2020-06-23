@@ -30,8 +30,8 @@ def login_request(request):
                 return HttpResponseRedirect('/home/user=%s/' % username)
             else:
                 # print('error')
-                # form = AuthenticationForm()
-                # context = {"error": "Invalid username or password.", "form":form}
+                # form = AuthenticationForm()r
+                # context = {"error": "Invalid usename or password.", "form":form}
                 # return render(request, 'home/sign-in.html', {"context":context})
                 messages.info(request, "we dont have that user")
         else:
@@ -54,6 +54,13 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            #new add by An 23/06/2020
+            username = request.POST['username']
+            user = User.objects.get(username = username)
+            info = Info()
+            info.key = user
+            info.save()
+            #new add by An 23/06/2020
             return HttpResponseRedirect('/home/user=%s/' % request.POST['username'])
     return render(request, 'home/sign-up.html', {'form': form})
 
@@ -115,7 +122,46 @@ def doTest(request, username, exam_name):
         user = User.objects.get(username = username)
         point.key1 = user
         point.key2 = exam
-        point.point = no_corr_chooseAns
+        point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
         point.save()
         return HttpResponseRedirect('/home/user=%s/' % username)
     return render(request,'home/do-test.html',context)
+
+def info(request, username):
+    user = User.objects.get(username = username)
+    info = Info.objects.get(key = user.id)
+    context = {
+        'firstName' : user.first_name,
+        'lastName' : user.last_name,
+        'sex' : info.sex,
+        'address' : info.address,
+        'birthDate' : info.birthDate,
+    }
+    print(info.birthDate)
+
+    if request.method == 'POST':
+        user.first_name = request.POST['firstName']
+        user.last_name = request.POST['lastName']
+        user.save()
+        info.sex = request.POST['sex']
+        info.address = request.POST['address']
+        if request.POST['birthDate'] != "":
+            info.birthDate = request.POST['birthDate']
+            print('birth date: ' + request.POST['birthDate'])
+        else:
+            info.birthDate = info.birthDate
+            # print('birth date fail: ' + info.birthDate.strftime(' %d / %m / %Y'))
+        # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
+        info.save()
+        # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
+        
+        context = {
+            'firstName' : user.first_name,
+            'lastName' : user.last_name,
+            'sex' : info.sex,
+            'address' : info.address,
+            'birthDate' : info.birthDate,
+        }
+        return render(request, 'home/info.html',context)
+
+    return render(request, 'home/info.html', context)
