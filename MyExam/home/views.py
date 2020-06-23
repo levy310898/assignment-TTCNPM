@@ -32,10 +32,10 @@ def login_request(request):
                 return HttpResponseRedirect('/home/user=%s/' % username)
             else:
                 # print('error')
-                # form = AuthenticationForm()
-                # context = {"error": "Invalid username or password.", "form":form}
-                # return render(request, 'home/sign-in.html', {"context":context})
-                messages.info(request, "we dont have that user")
+                form = AuthenticationForm()
+                context = {"error": "you might not register or password was wrong", "form":form}
+                return render(request, 'home/sign-in.html', {"context":context})
+                # messages.info(request, "cannot found your username or password")
         else:
             print('error')
             form = AuthenticationForm()
@@ -43,7 +43,8 @@ def login_request(request):
             return render(request, 'home/sign-in.html', {"context":context})
             messages.info(request, "Invalid username or password.")
     form = AuthenticationForm()
-    return render(request, 'home/sign-in.html', {"form":form})
+    context = {"form":form}
+    return render(request, 'home/sign-in.html', {"context":context})
 # def home(request):
 #     return render(request,'home/home.html')
 
@@ -62,13 +63,13 @@ def signUp(request):
 def home(request,username):
     # return render(request,"home/home.html")
     user = User.objects.get(username = username)
-    exams = Exam.objects.all()
+    exams = Exam.objects.exclude(key = user)
     exams_context = []
     for exam in exams:
         creator = exam.key
         score_obj = []
         # score_obj = Point.objects.get(key1 = creator, key2 = exam)
-        for score in Point.objects.filter(key1 = user, key2 = exam):
+        for score in Point.objects.filter(key1 = user,key2 = exam):
             score_obj.append(score)
         print(score_obj)
         score = None
@@ -91,8 +92,43 @@ def home(request,username):
     }
     return render(request,'home/home.html',{"context":context})
 
-def myTest(request):
-    return render(request,"home/my-test.html")
+def myTest(request, username):
+    user = User.objects.get(username = username)
+    my_exams = Exam.objects.filter(key=user)
+    my_exams_context = []
+    for exam in my_exams:
+        my_exams_context.append({
+            "exam":exam.examName
+        })
+    
+    do_exams = Exam.objects.exclude(key = user)# lấy ra những exams không phải do user này tạo ra
+    done_exams_context = []
+    for exam in do_exams:
+        creator = exam.key
+        score_obj = []
+        # score_obj = Point.objects.get(key1 = creator, key2 = exam)
+        for score in Point.objects.filter(key1 = user,key2 = exam):
+            score_obj.append(score)
+        score = None
+        if score_obj ==[]:
+            pass
+        else:
+            scores = []# lấy điểm số lớn nhất
+            for item in score_obj:
+                scores.append(item.point)
+            score = max(scores)
+            done_exams_context.append({
+                "creator":creator.username,
+                "exam":exam.examName,
+                "score":score,
+            })
+    context = {
+        "username": username,
+        "my_exams":my_exams_context,
+        "done_exams":done_exams_context,
+    }
+    return render(request,"home/my-test.html",{"context":context})
+
 def doTest(request, username, exam_name):
     exam = Exam.objects.get(examName = exam_name) #get the exam
     ques = list(Question.objects.filter(key = exam.id)) #find all of the question related to that exam
