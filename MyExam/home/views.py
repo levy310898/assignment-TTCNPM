@@ -1,7 +1,9 @@
 from django import forms
-from django.shortcuts import render
 
-from .forms import RegistrationForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from .forms import RegistrationForm, ChangePassword
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
@@ -119,3 +121,18 @@ def doTest(request, username, exam_name):
         point.save()
         return HttpResponseRedirect('/home/user=%s/' % username)
     return render(request,'home/do-test.html',context)
+
+def change_password(request,username):
+        form=ChangePassword(request.POST, username)
+        user = User.objects.get(username = username)
+        if request.method=='POST':
+            if form.is_valid():
+                new_pass=form.cleaned_data['new_password']
+                  #get the current user object as user
+                
+                user.password=new_pass 
+                print('pasword la ' + new_pass + 'user la: ' + user.username)
+                user.save()
+                print('password moi la ' + user.password)
+                return HttpResponseRedirect('/home/user=%s/' % username)
+        return render(request, 'home/change-password.html', {'form': form})          #do whatever you want to do man..

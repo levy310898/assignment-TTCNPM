@@ -34,3 +34,17 @@ class RegistrationForm(forms.Form):
     def save(self):
             User.objects.create_user(username=self.cleaned_data['username'], email=self.cleaned_data['email'], first_name=self.cleaned_data['first_name'], last_name=self.cleaned_data['last_name'], password=self.cleaned_data['password1'])
     
+
+class ChangePassword(forms.Form):
+    old_password=forms.CharField(label='Nhập mật khẩu', widget=forms.PasswordInput())
+    new_password=forms.CharField(label='Nhập mật khẩu mới', widget=forms.PasswordInput())
+    reenter_password=forms.CharField(label='Nhập lại mật khẩu mới', widget=forms.PasswordInput())
+    def clean(self):
+        new_password=self.cleaned_data.get('new_password')
+        reenter_password=self.cleaned_data.get('reenter_password')
+        old_password=self.cleaned_data.get('old_password')
+          #similarly old_password
+        if new_password and new_password!=reenter_password or new_password == old_password:
+            raise forms.ValidationError("Nhập lại mật khẩu!")
+         #get the user object and check from old_password list if any one matches with the new password raise error(read whole answer you would know) 
+        return self.cleaned_data #don't forget this.
