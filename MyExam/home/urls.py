@@ -6,6 +6,7 @@ urlpatterns = [
     path('home/user=<str:username>/', views.home, name= "home"),
     path('sign-up/', views.signUp, name= "sign-up"),
     path('home/user=<str:username>/my-test/', views.myTest, name= "my-test"),
+    path('home/user=<str:username>/my-test/add', views.add_my_test, name= "add-my-test"),
     path('home/user=<str:username>/exam=<str:exam_name>/', views.doTest, name= "do-test"),
     path('admin/',views.admin,name="admin"),
     path('',views.logout, {'next/page':'/'}, name='logout'),
