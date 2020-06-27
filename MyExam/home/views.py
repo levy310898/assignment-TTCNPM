@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -83,7 +84,7 @@ def home(request,username):
         print(score_obj)
         score = None
         if score_obj ==[]:
-            score = "chua lam"
+            score = "chưa làm"
         else:
             scores = []
             for item in score_obj:
@@ -95,9 +96,19 @@ def home(request,username):
             "score":score,
         })    
     
+    paginator = Paginator(exams_context, 2) # Show 25 contacts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    # context = {
+    #     "user":user,
+    #     "exams" : exams_context,
+    # }
+
     context = {
         "user":user,
-        "exams" : exams_context,
+        "page_obj" : page_obj,
     }
     return render(request,'home/home.html',{"context":context})
 
@@ -115,6 +126,8 @@ def myTest(request, username):
             "exam":exam.examName
         })
     
+    if my_exams_context == []:
+        my_exams_context = 'none'
     do_exams = Exam.objects.exclude(key = user)# lấy ra những exams không phải do user này tạo ra
     done_exams_context = []
     for exam in do_exams:
@@ -136,8 +149,10 @@ def myTest(request, username):
                 "exam":exam.examName,
                 "score":score,
             })
+    if done_exams_context == []:
+        done_exams_context = 'none'
     context = {
-        "username": username,
+        "user": user,
         "my_exams":my_exams_context,
         "done_exams":done_exams_context,
     }
@@ -176,6 +191,7 @@ def info(request, username):
     user = User.objects.get(username = username)
     info = Info.objects.get(key = user.id)
     context = {
+        'username':username,
         'firstName' : user.first_name,
         'lastName' : user.last_name,
         'sex' : info.sex,
@@ -201,6 +217,7 @@ def info(request, username):
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         
         context = {
+            'username':username,
             'firstName' : user.first_name,
             'lastName' : user.last_name,
             'sex' : info.sex,
