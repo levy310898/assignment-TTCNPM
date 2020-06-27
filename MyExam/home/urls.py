@@ -6,9 +6,11 @@ urlpatterns = [
     path('home/user=<str:username>/', views.home, name= "home"),
     path('sign-up/', views.signUp, name= "sign-up"),
     path('home/user=<str:username>/my-test/', views.myTest, name= "my-test"),
+    path('home/user=<str:username>/my-test/add', views.add_my_test, name= "add-my-test"),
     path('home/user=<str:username>/exam=<str:exam_name>/', views.doTest, name= "do-test"),
     path('admin/',views.admin,name="admin"),
     path('',views.logout, {'next/page':'/'}, name='logout'),
+    path('home/user=<str:username>/info/', views.info, name='info'),
     path('home/user=<str:username>/change-password/', views.change_password, name='change-password'),
     path('home/user=<str:username>/info/',views.info, name = "info"),
 ]

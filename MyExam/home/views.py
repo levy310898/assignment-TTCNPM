@@ -30,6 +30,7 @@ def login_request(request):
                 print(user.username)
                 # return HttpResponseRedirect("/home")
                 # return home(request,username)
+                request.session['user'] = username
                 return HttpResponseRedirect('/home/user=%s/' % username)
             else:
                 # print('error')
@@ -111,9 +112,14 @@ def home(request,username):
     return render(request,'home/home.html',{"context":context})
 
 def myTest(request, username):
+    user = request.session.get('user', None)
+    print('user')
+    if user is None or user == '' or user == []:
+        return redirect(reverse('sign-in'))
     user = User.objects.get(username = username)
     my_exams = Exam.objects.filter(key=user)
     my_exams_context = []
+    print('123')
     for exam in my_exams:
         my_exams_context.append({
             "exam":exam.examName
@@ -234,3 +240,16 @@ def change_password(request,username):
                 print('password moi la ' + user.password)
                 return HttpResponseRedirect('/home/user=%s/' % username)
         return render(request, 'home/change-password.html', {'form': form})          #do whatever you want to do man..
+
+
+def add_my_test(request, username):
+    data = request.POST
+    try:
+        user = User.objects.get(username = username)
+    except:
+        return redirect(reverse('sign-in'))
+    my_exam = Exam.objects.create(
+        key=user,
+        examName=data.get('testname', None)
+    )
+    return redirect('/home/user='+ username +'/my-test/')

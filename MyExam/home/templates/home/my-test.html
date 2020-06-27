@@ -68,7 +68,7 @@
           <div class="modal-content">
           
             <!-- Modal Header -->
-            <form method="POST" class="p-3">
+            <form method="POST" class="p-3" action='{% url 'add-my-test' username=context.username %}'>
                 {% csrf_token %}
                 <div class="form-group">
                     <h2 class="text-center">Tạo bài kiểm tra</h2>
