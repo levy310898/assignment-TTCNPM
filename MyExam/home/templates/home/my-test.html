@@ -36,7 +36,18 @@
             {% endif %}
             
             
+<<<<<<< HEAD
             <div class="d-flex justify-content-center mt-3">
+=======
+<<<<<<< HEAD
+            {% for exam in context.my_exams %}
+                <a href="{% url 'add-question' context.username exam.exam %}" class="test-name"><h3>{{ exam.exam }}</h3></a>
+            {% endfor %}
+            <div class="d-flex justify-content-center">
+=======
+            <div class="d-flex justify-content-center mt-5">
+>>>>>>> d38018d5e89977a087d03f8e17dd66cc286b77f1
+>>>>>>> a4485a973c0b23b930dba79ee67c62a9a395f8b5
                 <button type="button" class="btn btn-success px-5 py-2" id="createTestBtn" data-toggle="modal" data-target="#myModal">Tạo bài kiểm tra</a>
             
             </div>
@@ -44,11 +55,26 @@
         </div>
 
         <div class="test-section mt-5">
+<<<<<<< HEAD
+            <h2 class="text-center">Bài kiểm tra đã làm</h2>
+            {% for exam in context.done_exams %}
+            <div class="test-component">
+                <a href="{% url 'do-test' context.username exam.exam %}" class="test-name">{{exam.exam}}</a>
+                <div class="test-info">
+                    <p class="test-owner">Người tạo: {{exam.creator}}</p>
+                    <p class="test-date">{{exam.score}}</p>
+=======
             <h2 class="text-center mb-4">Bài kiểm tra đã làm</h2>
             {% if context.done_exams == 'none' %}
                 <h3 class="text-center"> Bạnchưa làm bài kiểm tra nào cả</h3>
+<<<<<<< HEAD
                 <div class="d-flex justify-content-center mt-3">
                     <a href="{% url 'home' context.user.username %}" class="btn btn-primary px-5 py-2">Quay lại trang chủ</a>
+=======
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'home' context.user.username %}" class="btn btn-primary">Quay lại trang chủ</a>
+>>>>>>> d38018d5e89977a087d03f8e17dd66cc286b77f1
+>>>>>>> a4485a973c0b23b930dba79ee67c62a9a395f8b5
                 </div>
                 
             {% else %}
