@@ -20,6 +20,10 @@
 {% url 'my-test' context.user.username %}
 {% endblock %}
 
+{%block change-password %}
+{% url "change-password" context.user.username %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="test-section mt-5">

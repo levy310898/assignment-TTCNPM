@@ -18,30 +18,95 @@
 {% url 'my-test' username %}
 {% endblock %}
 
+{%block change-password %}
+{% url "change-password" username %}
+{% endblock %}
+
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-<h1>Tên: </h1> 
-<input type="text" name="firstName" value="{{firstName}}" placeholder="Nhập tên mới">
-<h1>Họ: </h1>
-<input type="text" name="lastName" value="{{lastName}}" placeholder="Nhập họ mới">
-<h1>Giới tính: </h1>
-{% if sex == "Nam" %}
-<label> <input type="radio" name="sex" value="Nam" checked> Nam</label>
-<label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
-{% elif sex == "Nữ" %}
-<label> <input type="radio" name="sex" value="Nam"> Nam</label>
-<label> <input type="radio" name="sex" value="Nữ" checked> Nữ </label>
-{% else %}
-<label> <input type="radio" name="sex" value="Nam"> Nam</label>
-<label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
-{% endif %}
-<h1>Ngày sinh:</h1>
-<input type="date" name="birthDate" value="{{birthDate|date:"Y-m-d"}}">
-<h1>Địa chỉ: </h1>
-<input type="text" name="address" value="{{address}}">
-<input type="submit" value="Cập nhập">
-</form>
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="firstName" class="col-2 col-form-label">Tên: </label>
+            <div class="col-10">
+              <input class="form-control" name="firstName" type="text" value="{{firstName}}" placeholder="Nhập tên mới" id="firstName">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="lastName" class="col-2 col-form-label">Họ: </label>
+            <div class="col-10">
+              <input class="form-control" name="lastName" type="text" value="{{lastName}}" placeholder="Nhập họ mới" id="lastName">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="lastName" class="col-2 col-form-label">Giới tính: </label>
+            <div class="col-10">
+                {% if sex == "Nam" %}
+                    <div class="row">
+                        <div class="col-6">
+                            <label> <input type="radio" name="sex" value="Nam" checked> Nam</label>
+                        </div>
+
+                        <div class="col-6">
+                            <label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
+                        </div>
+                    </div>
+                {% elif sex == "Nữ" %}
+                <div class="row">
+                    <div class="col-6">
+                        <label> <input type="radio" name="sex" value="Nam"> Nam</label>
+                    </div>
+
+                    <div class="col-6">
+                        <label> <input type="radio" name="sex" value="Nữ" checked> Nữ </label>
+                    </div>
+                </div>
+                {% else %}
+                <div class="row">
+                    <div class="col-6">
+                        <label> <input type="radio" name="sex" value="Nam"> Nam</label>
+                    </div>
+
+                    <div class="col-6">
+                        <label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
+                    </div>
+                </div>
+                {% endif %}
+                
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label">Ngày sinh: </label>
+            <div class="col-10">
+              <input class="form-control" type="date" name="birthDate" value="{{birthDate}}" id="example-date-input">
+            </div>
+        </div>
+
+          <div class="form-group row">
+            <label for="address" class="col-2 col-form-label">Địa chỉ: </label>
+            <div class="col-10">
+              <input class="form-control" type="text" name="address" value="{{address}}">
+            </div>
+        </div>
+    
+    <!-- <h1>Ngày sinh:</h1>
+    <input type="date" name="birthDate" value="{{birthDate|date:'Y-m-d'}}"> -->
+    <!-- <h1>Địa chỉ: </h1>
+    <input type="text" name="address" value="{{address}}"> -->
+    <div class="d-flex justify-content-center">
+        <input type="submit" class="btn btn-info py-2 px-5" value="Cập nhập">
+    </div>
+    
+    </form>
+</div>
+
+<script>
+</script>
+
 {% endblock %}
     <!-- <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-success px-5 py-2" data-toggle="modal" data-target="#NameModal">Chỉnh sửa họ và tên </a>

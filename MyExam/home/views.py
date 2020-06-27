@@ -99,11 +99,6 @@ def home(request,username):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
-    # context = {
-    #     "user":user,
-    #     "exams" : exams_context,
-    # }
 
     context = {
         "user":user,
@@ -119,7 +114,6 @@ def myTest(request, username):
     user = User.objects.get(username = username)
     my_exams = Exam.objects.filter(key=user)
     my_exams_context = []
-    print('123')
     for exam in my_exams:
         my_exams_context.append({
             "exam":exam.examName
@@ -205,11 +199,12 @@ def info(request, username):
         user.save()
         info.sex = request.POST['sex']
         info.address = request.POST['address']
-        if request.POST['birthDate'] != "":
+        
+        if request.POST['birthDate'] != "" and request.POST['birthDate'] != info.birthDate:
             info.birthDate = request.POST['birthDate']
-            print('birth date: ' + request.POST['birthDate'])
-        else:
-            info.birthDate = info.birthDate
+            print("new birthday : "+ request.POST['birthDate'])
+        # else:
+        #     info.birthDate = info.birthDate
             # print('birth date fail: ' + info.birthDate.strftime(' %d / %m / %Y'))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         info.save()

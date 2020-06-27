@@ -16,8 +16,12 @@
 {% url 'my-test' context.user.username %}
 {% endblock %}
 
+{%block change-password %}
+{% url "change-password" context.user.username %}
+{% endblock %}
+
 {% block content %}
-    <div class="container">
+    <div class="container pb-5">
         <div class="test-section mt-5">
             <h2 class="text-center mb-4">Bài kiểm tra của tôi</h2>
 
@@ -32,7 +36,7 @@
             {% endif %}
             
             
-            <div class="d-flex justify-content-center mt-5">
+            <div class="d-flex justify-content-center mt-3">
                 <button type="button" class="btn btn-success px-5 py-2" id="createTestBtn" data-toggle="modal" data-target="#myModal">Tạo bài kiểm tra</a>
             
             </div>
@@ -43,8 +47,8 @@
             <h2 class="text-center mb-4">Bài kiểm tra đã làm</h2>
             {% if context.done_exams == 'none' %}
                 <h3 class="text-center"> Bạnchưa làm bài kiểm tra nào cả</h3>
-                <div class="d-flex justify-content-center">
-                    <a href="{% url 'home' context.user.username %}" class="btn btn-primary">Quay lại trang chủ</a>
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="{% url 'home' context.user.username %}" class="btn btn-primary px-5 py-2">Quay lại trang chủ</a>
                 </div>
                 
             {% else %}
@@ -68,7 +72,7 @@
           <div class="modal-content">
           
             <!-- Modal Header -->
-            <form method="POST" class="p-3" action='{% url 'add-my-test' username=context.username %}'>
+            <form method="POST" class="p-3" action='{% url 'add-my-test' context.user.username %}'>
                 {% csrf_token %}
                 <div class="form-group">
                     <h2 class="text-center">Tạo bài kiểm tra</h2>
