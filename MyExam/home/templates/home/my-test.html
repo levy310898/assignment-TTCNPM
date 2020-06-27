@@ -11,7 +11,7 @@
             <h2 class="text-center">Bài kiểm tra của tôi</h2>
             
             {% for exam in context.my_exams %}
-                <h3>{{ exam.exam }}</h3>
+                <a href="{% url 'add-question' context.username exam.exam %}" class="test-name"><h3>{{ exam.exam }}</h3></a>
             {% endfor %}
             <div class="d-flex justify-content-center">
                 <button type="button" class="btn btn-success px-5 py-2" id="createTestBtn" data-toggle="modal" data-target="#myModal">Tạo bài kiểm tra</a>
@@ -24,7 +24,7 @@
             <h2 class="text-center">Bài kiểm tra đã làm</h2>
             {% for exam in context.done_exams %}
             <div class="test-component">
-                <a href="{%url 'do-test' context.username exam.exam %}" class="test-name">{{exam.exam}}</a>
+                <a href="{% url 'do-test' context.username exam.exam %}" class="test-name">{{exam.exam}}</a>
                 <div class="test-info">
                     <p class="test-owner">Người tạo: {{exam.creator}}</p>
                     <p class="test-date">{{exam.score}}</p>

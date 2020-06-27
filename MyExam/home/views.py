@@ -12,6 +12,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 
+
 # Create your views here.
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -235,4 +236,40 @@ def add_my_test(request, username):
         key=user,
         examName=data.get('testname', None)
     )
-    return redirect('/home/user='+ username +'/my-test/')
+    # return redirect('/home/user='+ username +'/my-test/')
+    #return render(request,'/home/user=%s/make-test.html' %username)
+    return render(request,'home/make-test.html',{"my_exam":my_exam})
+
+def add_my_question(request,username,examname):
+    try:
+        exam = Exam.objects.get(examName=examname)
+    except Exception as e:
+        print(e)
+        return redirect(reverse('sign-in'))
+    if request.method == 'GET':
+        question = Question.objects.filter(key=exam).first()
+        return render(request,'home/make-test.html',{"my_exam":exam, "question": question})
+    else:
+        data = request.POST
+        question = Question.objects.filter(key=exam).first()
+        if question:
+            print(question)
+            question.question = data.get('ques', question.question)
+            question.answerA = data.get('answerA', question.answerA)
+            question.answerB = data.get('answerB', question.answerB)
+            question.answerC = data.get('answerC', question.answerC)
+            question.answerD = data.get('answerD', question.answerD)
+            question.corrAns = data.get('correct', question.corrAns)
+            question.save()
+        else:
+            my_question=Question.objects.create(
+                key=exam,
+                question=data.get('ques',None),
+                answerA=data.get('answerA',None),
+                answerB=data.get('answerB',None),
+                answerC=data.get('answerC',None),
+                answerD=data.get('answerD',None),
+                corrAns=data.get('correct',None),
+            )
+            #return HttpResponse("thêm câu hỏi thành công")
+        return redirect('/home/user='+ username + '/my-test')

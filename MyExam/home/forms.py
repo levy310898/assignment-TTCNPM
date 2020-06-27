@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from    .models import Question
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Tài khoản', max_length=30)
     email = forms.EmailField(label='Email')
@@ -48,3 +49,4 @@ class ChangePassword(forms.Form):
             raise forms.ValidationError("Nhập lại mật khẩu!")
          #get the user object and check from old_password list if any one matches with the new password raise error(read whole answer you would know) 
         return self.cleaned_data #don't forget this.
+
