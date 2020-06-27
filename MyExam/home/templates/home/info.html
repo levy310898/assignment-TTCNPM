@@ -1,4 +1,23 @@
 {% extends "home/base/base-home.html" %}
+<!-- name in navbar -->
+{% block name %}
+{{firstName}} {{lastName}}
+{% endblock %}
+<!-- link to home in logo -->
+{% block my-home %} 
+    {% url 'home' username %}
+{% endblock %}
+
+<!-- link to info -->
+
+{% block change-info %}
+{% url 'info' username %}
+{% endblock %}
+<!-- link to list-test -->
+{% block list-test %}
+{% url 'my-test' username %}
+{% endblock %}
+
 {% block content %}
 <form method="POST">
     {% csrf_token %}
@@ -17,7 +36,7 @@
 <label> <input type="radio" name="sex" value="Nam"> Nam</label>
 <label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
 {% endif %}
-<h1>Ngày sinh: {{birthDate}}</h1>
+<h1>Ngày sinh:</h1>
 <input type="date" name="birthDate" value="{{birthDate|date:"Y-m-d"}}">
 <h1>Địa chỉ: </h1>
 <input type="text" name="address" value="{{address}}">

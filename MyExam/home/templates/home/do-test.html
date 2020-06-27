@@ -7,7 +7,7 @@
         {% csrf_token %}
         {% for ques in question %}
         <div class="question-box">
-            <h2>{{ques.question}}</h2>
+            <h2>{{ forloop.counter }}) {{ques.question}}</h2>
                 <!-- <input name="{{ques.question}}" type="radio" id="{{ques.answerA}}" value="A">
                 <label for="{{ques.answerA}}">{{ques.answerA}}</label><br> -->
                 <div class="form-check" for="{{ques.answerA}}">

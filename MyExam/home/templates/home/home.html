@@ -3,10 +3,13 @@
 {{ context.user.first_name }} {{ context.user.last_name }}
 {% endblock %}
 
-{% block my_home %}
+{% block my-home %}
     {% url 'home' context.user.username %}
 {% endblock %}
 
+{% block change-info %}
+{% url 'info' context.user.username %}
+{% endblock %}
 
 {% block my-test %}
  
@@ -14,17 +17,23 @@
 {% endblock %}
 
 {% block list-test %}
-my-test
+{% url 'my-test' context.user.username %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        {% if "user" in context %}
-            <h1>{{ context.user.username }}</h1>
-        {% endif %}
-        
-        <div class="test-section">
-            {% for exam in context.exams %}
+        <div class="test-section mt-5">
+            <!-- {% for exam in context.exams %}
+            <div class="test-component">
+                <a href="exam={{ exam.exam }}" class="test-name">{{exam.exam}}</a>
+                <div class="test-info">
+                    <p class="test-owner">Người tạo: {{exam.user_name}}</p>
+                    <p class="test-date">{{exam.score}}</p>
+                </div>
+            </div>
+            {% endfor %} -->
+
+            {% for exam in context.page_obj %}
             <div class="test-component">
                 <a href="exam={{ exam.exam }}" class="test-name">{{exam.exam}}</a>
                 <div class="test-info">
@@ -33,6 +42,34 @@ my-test
                 </div>
             </div>
             {% endfor %}
+
+            <div class="pagination justify-content-center">
+                {% if context.page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="?page=1" class="page-link">&laquo; first</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="?page={{ context.page_obj.previous_page_number }}" class="page-link">previous</a>
+                    </li>
+                {% endif %}
+        
+                <span class="current">
+                    <li class="page-item">
+                        <p class="page-link">Page {{ context.page_obj.number }} of {{ context.page_obj.paginator.num_pages }}.</p>
+                    </li>
+                    
+                </span>
+        
+                {% if context.page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ context.page_obj.next_page_number }}">next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class = "page-link" href="?page={{ context.page_obj.paginator.num_pages }}">last &raquo;</a>
+                    </li>
+                    
+                {% endif %}
+            </div>
         </div>
     </div>
 

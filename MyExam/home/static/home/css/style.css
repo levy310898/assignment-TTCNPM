@@ -179,3 +179,23 @@
     background-color: #ccc;
     border-radius: 5px;
 }
+
+.my-exam__exam{
+    margin: 10px 0;
+    display:block !important;
+    /* background-color: #aaa; */
+    font-size:20px !important;
+    transition: all .2s linear;
+    border-radius: 2px;
+}
+
+.my-exam{
+    padding: 20px 10px;
+    max-height: 200px !important;
+    overflow-y: scroll;
+}
+.my-exam__exam:hover{
+    background-color: #aaa;
+    text-decoration: none;
+    color: #f6f6f6 !important;
+}

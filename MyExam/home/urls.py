@@ -10,5 +10,6 @@ urlpatterns = [
     path('admin/',views.admin,name="admin"),
     path('',views.logout, {'next/page':'/'}, name='logout'),
     path('home/user=<str:username>/change-password/', views.change_password, name='change-password'),
+    path('home/user=<str:username>/info/',views.info, name = "info"),
 ]
 

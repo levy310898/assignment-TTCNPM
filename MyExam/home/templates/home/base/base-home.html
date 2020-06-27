@@ -2,17 +2,16 @@
 <html lang="en">
 {% include 'home/base/base-head.html' %}
 <body>
-    <!-- {% include 'home/base/navbar.html' %} -->
     <div class="container-fluid">
         <nav class="main-nav py-2">
-            <a href="{% block my_home %} {% endblock %}" class="nav-brand">MyExam</a>
+            <a href="{% block my-home %} {% endblock %}" class="nav-brand">MyExam</a>
             <div class="user-icon">
                 <div class="user-icon__img"></div>
                 <p class="user-icon__name">{% block name %} {% endblock %}</p>
                 <ul class="user-menu">
                     <li class="user-item">
-                        <a href="info" class="user-link">Thay đổi thông tin cá nhân</a>
-                        <!-- <a href="{%block change-info%}  {% endblock %}" class="user-link">Thay đổi thông tin cá nhân</a> -->
+                        <!-- <a href="info" class="user-link">Thay đổi thông tin cá nhân</a> -->
+                        <a href="{%block change-info %}  {% endblock %}" class="user-link">Thay đổi thông tin cá nhân</a>
                     </li>
                     <li class="user-item">
                         <a href="{% block list-test %}  {% endblock %}" class="user-link">Bài kiểm tra của tôi</a>
