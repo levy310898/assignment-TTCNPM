@@ -288,3 +288,6 @@ def add_my_question(request,username,examname):
             )
             #return HttpResponse("thêm câu hỏi thành công")
         return redirect('/home/user='+ username + '/my-test')
+
+def logout_view(request):
+    logout(request)
