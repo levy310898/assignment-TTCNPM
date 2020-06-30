@@ -193,19 +193,19 @@ def info(request, username):
         'birthDate' : info.birthDate,
     }
     print(info.birthDate)
-
+    
     if request.method == 'POST':
+        print("new birthday : "+ request.POST['birthDate'])
         user.first_name = request.POST['firstName']
         user.last_name = request.POST['lastName']
         user.save()
         info.sex = request.POST['sex']
         info.address = request.POST['address']
         
-        if request.POST['birthDate'] != "" and request.POST['birthDate'] != info.birthDate:
+        if request.POST['birthDate'] != "":
             info.birthDate = request.POST['birthDate']
-            print("new birthday : "+ request.POST['birthDate'])
-        # else:
-        #     info.birthDate = info.birthDate
+        else:
+            info.birthDate = info.birthDate
             # print('birth date fail: ' + info.birthDate.strftime(' %d / %m / %Y'))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         info.save()
