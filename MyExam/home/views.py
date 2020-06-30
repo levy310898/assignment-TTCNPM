@@ -13,6 +13,8 @@ from .models import *
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -203,7 +205,8 @@ def info(request, username):
         info.address = request.POST['address']
         
         if request.POST['birthDate'] != "":
-            info.birthDate = request.POST['birthDate']
+            info.birthDate = datetime.strptime(request.POST['birthDate'], '%Y-%m-%d')
+            
         else:
             info.birthDate = info.birthDate
             # print('birth date fail: ' + info.birthDate.strftime(' %d / %m / %Y'))
