@@ -1,5 +1,4 @@
 from django import forms
-
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
@@ -195,7 +194,6 @@ def info(request, username):
     print(info.birthDate)
     
     if request.method == 'POST':
-        print("new birthday : "+ request.POST['birthDate'])
         user.first_name = request.POST['firstName']
         user.last_name = request.POST['lastName']
         user.save()
@@ -203,12 +201,14 @@ def info(request, username):
         info.address = request.POST['address']
         
         if request.POST['birthDate'] != "":
-            info.birthDate = request.POST['birthDate']
+            date_string = request.POST['birthDate']
         else:
             info.birthDate = info.birthDate
             # print('birth date fail: ' + info.birthDate.strftime(' %d / %m / %Y'))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         info.save()
+
+        print("real birthDate: " + str(type(info.birthDate)))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         
         context = {
