@@ -233,7 +233,7 @@ def change_password(request,username):
                 new_pass=form.cleaned_data['new_password']
                   #get the current user object as user
                 
-                user.password=new_pass 
+                user.set_password(new_pass) 
                 print('pasword la ' + new_pass + 'user la: ' + user.username)
                 user.save()
                 print('password moi la ' + user.password)
@@ -288,3 +288,6 @@ def add_my_question(request,username,examname):
             )
             #return HttpResponse("thêm câu hỏi thành công")
         return redirect('/home/user='+ username + '/my-test')
+
+def logout_view(request):
+    logout(request)
