@@ -291,3 +291,23 @@ def add_my_question(request,username,examname):
 
 def logout_view(request):
     logout(request)
+
+def search(request,username):
+    if request.method == "POST":
+        searchKey = request.POST['searchBox']
+        exams = list(Exam.objects.filter(examName__contains=searchKey))
+        listExam = list()
+        print("ten ng dung la "+username)
+        for ex in exams:
+            print(ex.examName)
+        ctx={
+            'username':username,
+            'exam':exams
+        }
+        if not exams:
+            ctx['flagEmpty']=True
+        else: 
+            ctx['flagEmpty']=False
+        return render(request,'home/search.html',ctx)
+    
+    return render(request,'home/search.html',)

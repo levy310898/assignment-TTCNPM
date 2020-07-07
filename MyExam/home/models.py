@@ -1,13 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+from time import gmtime, strftime
+from django.utils.timezone import now
 
 # Create your models here.
 class Exam(models.Model):
     key = models.ForeignKey( User ,on_delete = models.CASCADE)
     examName = models.CharField(max_length= 200, default= "")
+    dateCreate = models.DateField(default = datetime.now,blank = True, editable = False)
+
 
     def __str__(self):
-        return self.examName
+        return self.examName+" "+ str(self.dateCreate)
 
 class Question(models.Model):
     key = models.ForeignKey(Exam, on_delete= models.CASCADE)
