@@ -1,6 +1,6 @@
 <form method="POST">
     {% csrf_token %}
-    <input type="text" placeholder="Search..." name="searchBox">
+    <input type="text" placeholder="Search..." name="searchBox" required>
     <button type="submit">Search</button>
 </form>
 {% if flagEmpty %}

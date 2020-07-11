@@ -11,6 +11,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from dal import autocomplete
 
 from datetime import datetime
 
@@ -82,7 +83,7 @@ def home(request,username):
         # score_obj = Point.objects.get(key1 = creator, key2 = exam)
         for score in Point.objects.filter(key1 = user,key2 = exam):
             score_obj.append(score)
-        print(score_obj)
+        # print(score_obj)
         score = None
         if score_obj ==[]:
             score = "chưa làm"
@@ -110,7 +111,7 @@ def home(request,username):
 
 def myTest(request, username):
     user = request.session.get('user', None)
-    print('user')
+    # print('user')
     if user is None or user == '' or user == []:
         return redirect(reverse('sign-in'))
     user = User.objects.get(username = username)
@@ -173,12 +174,19 @@ def doTest(request, username, exam_name):
         for i in range(len(chooseAns)):
             if chooseAns[i] == corrAns[i]:
                 no_corr_chooseAns += 1
-        point = Point()
         user = User.objects.get(username = username)
-        point.key1 = user
-        point.key2 = exam
-        point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
-        point.save()
+        point_exist = Point.objects.filter(key1 = user, key2 = exam).exists()
+        if not point_exist:
+            new_point=Point()
+            new_point.key1 = user
+            new_point.key2 = exam
+            new_point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
+            new_point.save()
+        else:
+            point = Point.objects.get(key1 = user, key2 = exam)
+            point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
+            print(point.point)
+            point.save()
         return HttpResponseRedirect('/home/user=%s/' % username)
     return render(request,'home/do-test.html',context)
 
@@ -193,7 +201,7 @@ def info(request, username):
         'address' : info.address,
         'birthDate' : info.birthDate,
     }
-    print(info.birthDate)
+    # print(info.birthDate)
     
     if request.method == 'POST':
         user.first_name = request.POST['firstName']
@@ -211,7 +219,7 @@ def info(request, username):
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         info.save()
 
-        print("real birthDate: " + str(type(info.birthDate)))
+        # print("real birthDate: " + str(type(info.birthDate)))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         
         context = {
@@ -234,9 +242,9 @@ def change_password(request,username):
                   #get the current user object as user
                 
                 user.set_password(new_pass) 
-                print('pasword la ' + new_pass + 'user la: ' + user.username)
+                # print('pasword la ' + new_pass + 'user la: ' + user.username)
                 user.save()
-                print('password moi la ' + user.password)
+                # print('password moi la ' + user.password)
                 return HttpResponseRedirect('/home/user=%s/' % username)
         return render(request, 'home/change-password.html', {'form': form})          #do whatever you want to do man..
 
@@ -295,7 +303,7 @@ def logout_view(request):
 def search(request,username):
     if request.method == "POST":
         searchKey = request.POST['searchBox']
-        exams = list(Exam.objects.filter(examName__contains=searchKey))
+        exams = list(Exam.objects.filter(examName__icontains=searchKey))
         listExam = list()
         print("ten ng dung la "+username)
         for ex in exams:
