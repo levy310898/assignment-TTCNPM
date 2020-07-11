@@ -200,9 +200,10 @@ def info(request, username):
         'sex' : info.sex,
         'address' : info.address,
         'birthDate' : info.birthDate,
+        'avatar' : info.avatar,
     }
     # print(info.birthDate)
-    
+    print(info.avatar)
     if request.method == 'POST':
         user.first_name = request.POST['firstName']
         user.last_name = request.POST['lastName']

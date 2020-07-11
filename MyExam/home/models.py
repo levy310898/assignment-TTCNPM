@@ -41,6 +41,7 @@ class Info(models.Model):
     key = models.ForeignKey( User ,on_delete = models.CASCADE)
     birthDate = models.DateField(null= True)
     address = models.TextField(max_length=100, default="")
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     
     name = "Info of {}"
     def __str__(self):
