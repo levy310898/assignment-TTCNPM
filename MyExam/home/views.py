@@ -11,7 +11,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from dal import autocomplete
+# from dal import autocomplete
 
 from datetime import datetime
 
@@ -202,15 +202,22 @@ def info(request, username):
         'birthDate' : info.birthDate,
         'avatar' : info.avatar,
     }
+    if info.avatar is not None:
+        context['avatar']= info.avatar
     # print(info.birthDate)
-    print(info.avatar)
+    # print(info.avatar)
     if request.method == 'POST':
         user.first_name = request.POST['firstName']
         user.last_name = request.POST['lastName']
         user.save()
         info.sex = request.POST['sex']
         info.address = request.POST['address']
-        
+        if request.FILES.get('userAvatar', False):
+            print("here")
+            info.avatar=request.FILES.get('userAvatar', False)
+        else:
+            print('failed')
+        #     print(request.FILE['imageFile'])
         if request.POST['birthDate'] != "":
             info.birthDate = datetime.strptime(request.POST['birthDate'], '%Y-%m-%d')
             
@@ -230,6 +237,7 @@ def info(request, username):
             'sex' : info.sex,
             'address' : info.address,
             'birthDate' : info.birthDate,
+            'avatar' : info.avatar,
         }
         return render(request, 'home/info.html',context)
 
