@@ -328,3 +328,7 @@ def search(request,username):
         return render(request,'home/search.html',ctx)
     
     return render(request,'home/search.html',)
+
+def newTest(request,username):
+    user = User.objects.get(username = username)
+    return render(request,'home/new-test.html',{'user':user})
