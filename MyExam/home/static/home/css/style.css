@@ -232,3 +232,8 @@
     overflow-y: scroll;
     border-radius: 5px;
 }
+
+#noElement{
+    color:#f6f6f6;
+    text-align: center;
+}
