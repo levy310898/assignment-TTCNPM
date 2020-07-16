@@ -1,23 +1,30 @@
 {% extends "home/base/base-home.html" %}
-
+{% load static %}
 {% block content %}
+    
     <h1>Name Exam: {{ my_exam.examName }}</h1>
     <form method ="post" action="{% url 'add-question' username=my_exam.key examname=my_exam.examName %}">
         {% csrf_token %}
-        <h2>Điền câu hỏi</h2>
-        <input type="text" name="ques" placeholder="Enter question" {% if question %}value="{{ question.question }}"{% endif %}>
+        
+        <h2>Điền câu hỏi </h2>
+        <input type="text" name="ques" placeholder="Enter question">
         <h2>Đáp án A</h2>
-        <input type="text" name="answerA" placeholder="Enter ansewer A" {% if question %}value="{{ question.answerA }}"{% endif %}>
+        <input type="text" name="answerA" placeholder="Enter ansewer A">
         <h2>Đáp án B</h2>
-        <input type="text" name="answerB" placeholder="Enter ansewer B" {% if question %}value="{{ question.answerB }}"{% endif %}>
+        <input type="text" name="answerB" placeholder="Enter ansewer B">
         <h2>Đáp án C</h2>
-        <input type="text" name="answerC" placeholder="Enter ansewer C" {% if question %}value="{{ question.answerC }}"{% endif %}>
+        <input type="text" name="answerC" placeholder="Enter ansewer C">
         <h2>Đáp án D</h2>
-        <input type="text" name="answerD" placeholder="Enter ansewer D" {% if question %}value="{{ question.answerD }}"{% endif %}>
+        <input type="text" name="answerD" placeholder="Enter ansewer D">
         <h2>Đáp án đúng</h2>
-        <input type="text" name="correct" placeholder="Enter correct ansewer" {% if question %}value="{{ question.corrAns }}"{% endif %}>    
+        <input type="text" name="correct" placeholder="Enter correct ansewer">
+       
+        
         <input type="submit" value="Gửi">
         <a href="{% url 'my-test' my_exam.key %}">Back</a>
+
+
+        
     </form>
     
 {% endblock %}

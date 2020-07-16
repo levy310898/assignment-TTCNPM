@@ -1,0 +1,11 @@
+
+
+{% for question in questions %}
+<ul>
+    <li><a href="{% url 'delete-question' question.pk %}">Delete</a></li>
+    <li>{{question.question}}</li>
+</ul>
+{% endfor %}
+
+{% comment %} cho nay ban them cai nut them cau hoi sau nhe {% endcomment %}
+<a href="{% url 'add-question' exam.key.username exam.examName %}">add question</a>

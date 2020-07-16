@@ -30,7 +30,7 @@
             {% else %}
                 <div class="my-exam">
                     {% for exam in context.my_exams %}
-                        <a href="{% url 'add-question' context.user.username exam.exam %}" class="my-exam__exam">{{ exam.exam }}</a>
+                        <a href="{% url 'list-question' context.user.username exam %}" class="my-exam__exam">{{ exam }}</a>
                     {% endfor %}
                 </div>
             {% endif %}

@@ -12,8 +12,6 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-
-
 # Create your views here.
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -109,20 +107,18 @@ def home(request,username):
 
 def myTest(request, username):
     user = request.session.get('user', None)
-    print('user')
+    print(user)
     if user is None or user == '' or user == []:
         return redirect(reverse('sign-in'))
     user = User.objects.get(username = username)
     my_exams = Exam.objects.filter(key=user)
     my_exams_context = []
     for exam in my_exams:
-        my_exams_context.append({
-            "exam":exam.examName
-        })
+        my_exams_context.append(exam.examName)
     
     if my_exams_context == []:
         my_exams_context = 'none'
-    do_exams = Exam.objects.exclude(key = user)# lấy ra những exams không phải do user này tạo ra
+    do_exams = Exam.objects.exclude(key = user)# lấy ra những exams không phải do user có này tạo ra
     done_exams_context = []
     for exam in do_exams:
         creator = exam.key
@@ -145,6 +141,7 @@ def myTest(request, username):
             })
     if done_exams_context == []:
         done_exams_context = 'none'
+    print(my_exams_context)
     context = {
         "user": user,
         "my_exams":my_exams_context,
@@ -256,32 +253,44 @@ def add_my_question(request,username,examname):
     try:
         exam = Exam.objects.get(examName=examname)
     except Exception as e:
-        print(e)
+        #print(e)
         return redirect(reverse('sign-in'))
     if request.method == 'GET':
         question = Question.objects.filter(key=exam).first()
         return render(request,'home/make-test.html',{"my_exam":exam, "question": question})
     else:
         data = request.POST
-        question = Question.objects.filter(key=exam).first()
-        if question:
-            print(question)
-            question.question = data.get('ques', question.question)
-            question.answerA = data.get('answerA', question.answerA)
-            question.answerB = data.get('answerB', question.answerB)
-            question.answerC = data.get('answerC', question.answerC)
-            question.answerD = data.get('answerD', question.answerD)
-            question.corrAns = data.get('correct', question.corrAns)
-            question.save()
-        else:
-            my_question=Question.objects.create(
-                key=exam,
-                question=data.get('ques',None),
-                answerA=data.get('answerA',None),
-                answerB=data.get('answerB',None),
-                answerC=data.get('answerC',None),
-                answerD=data.get('answerD',None),
-                corrAns=data.get('correct',None),
-            )
+        # question = Question.objects.filter(key=exam).first()
+        # if question:
+        #     print(question)
+        #     question.question = data.get('ques', question.question)
+        #     question.answerA = data.get('answerA', question.answerA)
+        #     question.answerB = data.get('answerB', question.answerB)
+        #     question.answerC = data.get('answerC', question.answerC)
+        #     question.answerD = data.get('answerD', question.answerD)
+        #     question.corrAns = data.get('correct', question.corrAns)
+        #     question.save()
+
+        # else:
+        my_question=Question.objects.create(
+            key=exam,
+            question=data.get('ques',None),
+            answerA=data.get('answerA',None),
+            answerB=data.get('answerB',None),
+            answerC=data.get('answerC',None),
+            answerD=data.get('answerD',None),
+            corrAns=data.get('correct',None),
+        )
             #return HttpResponse("thêm câu hỏi thành công")
-        return redirect('/home/user='+ username + '/my-test')
+        return redirect(f'/home/user={username}/exam={exam.examName}/list-question')
+
+
+def list_question(request, user, exam):
+    user = User.objects.get(username=user)
+    exam = Exam.objects.get(examName=exam)
+    questions = Question.objects.filter(key=exam, key__key=user)
+    return render(request, "home/list-question.html",{"questions": questions, "exam": exam})
+
+def delete_question(request, pk):
+    Question.objects.get(pk=pk).delete()
+    return HttpResponse("pppp")
