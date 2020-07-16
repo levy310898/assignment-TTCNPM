@@ -293,4 +293,4 @@ def list_question(request, user, exam):
 
 def delete_question(request, pk):
     Question.objects.get(pk=pk).delete()
-    return HttpResponse("pppp")
+    return HttpResponse("delete success!")
