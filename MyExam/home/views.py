@@ -12,6 +12,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from datetime import datetime
 # Create your views here.
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -188,24 +189,34 @@ def info(request, username):
         'sex' : info.sex,
         'address' : info.address,
         'birthDate' : info.birthDate,
+        'avatar' : info.avatar,
     }
-    print(info.birthDate)
-
+    if info.avatar is not None:
+        context['avatar']= info.avatar
+    # print(info.birthDate)
+    # print(info.avatar)
     if request.method == 'POST':
         user.first_name = request.POST['firstName']
         user.last_name = request.POST['lastName']
         user.save()
         info.sex = request.POST['sex']
         info.address = request.POST['address']
-        
-        if request.POST['birthDate'] != "" and request.POST['birthDate'] != info.birthDate:
-            info.birthDate = request.POST['birthDate']
-            print("new birthday : "+ request.POST['birthDate'])
-        # else:
-        #     info.birthDate = info.birthDate
+        if request.FILES.get('userAvatar', False):
+            print("here")
+            info.avatar=request.FILES.get('userAvatar', False)
+        else:
+            print('failed')
+        #     print(request.FILE['imageFile'])
+        if request.POST['birthDate'] != "":
+            info.birthDate = datetime.strptime(request.POST['birthDate'], '%Y-%m-%d')
+            
+        else:
+            info.birthDate = info.birthDate
             # print('birth date fail: ' + info.birthDate.strftime(' %d / %m / %Y'))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         info.save()
+
+        # print("real birthDate: " + str(type(info.birthDate)))
         # print('first ' + info.birthDate.strftime(' %d / %m / %Y'))
         
         context = {
@@ -215,6 +226,7 @@ def info(request, username):
             'sex' : info.sex,
             'address' : info.address,
             'birthDate' : info.birthDate,
+            'avatar' : info.avatar,
         }
         return render(request, 'home/info.html',context)
 

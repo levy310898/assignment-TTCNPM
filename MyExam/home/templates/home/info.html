@@ -24,7 +24,7 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group row">
             <label for="firstName" class="col-2 col-form-label">Tên: </label>
@@ -66,11 +66,11 @@
                 {% else %}
                 <div class="row">
                     <div class="col-6">
-                        <label> <input type="radio" name="sex" value="Nam"> Nam</label>
+                        <label> <input type="radio" name="sex" value="Nam" required> Nam</label>
                     </div>
 
                     <div class="col-6">
-                        <label> <input type="radio" name="sex" value="Nữ"> Nữ </label>
+                        <label> <input type="radio" name="sex" value="Nữ" required> Nữ </label>
                     </div>
                 </div>
                 {% endif %}
@@ -82,7 +82,7 @@
         <div class="form-group row">
             <label for="example-date-input" class="col-2 col-form-label">Ngày sinh: </label>
             <div class="col-10">
-              <input class="form-control" type="date" name="birthDate" value="{{birthDate}}" id="example-date-input">
+              <input class="form-control" type="date" name="birthDate" value="{{birthDate|date:'Y-m-d'}}" id="example-date-input">
             </div>
         </div>
 
@@ -91,12 +91,16 @@
             <div class="col-10">
               <input class="form-control" type="text" name="address" value="{{address}}">
             </div>
+
+            {% if avatar %}
+            <img src="{{avatar.url}}" width="240" height="240">
+            {% else %}
+            <img src='/media/avatars/default avatar.png' width="240" height="240">
+            {%endif%}
+            <input type="file" name="userAvatar" accept="image/*">
+
+
         </div>
-    
-    <!-- <h1>Ngày sinh:</h1>
-    <input type="date" name="birthDate" value="{{birthDate|date:'Y-m-d'}}"> -->
-    <!-- <h1>Địa chỉ: </h1>
-    <input type="text" name="address" value="{{address}}"> -->
     <div class="d-flex justify-content-center">
         <input type="submit" class="btn btn-info py-2 px-5" value="Cập nhập">
     </div>
@@ -108,27 +112,3 @@
 </script>
 
 {% endblock %}
-    <!-- <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-success px-5 py-2" data-toggle="modal" data-target="#NameModal">Chỉnh sửa họ và tên </a>
-    
-    </div>
-    <div class="modal fade" id="NameModal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-             Modal Header
-            <form method="POST" class="p-3">
-                {% csrf_token %}
-                <div class="form-group">
-                    <h2 class="text-center">Nhập họ tên mới</h2>
-                    <input type="text" class="form-control" name="firstName" value="{{firstName}}" placeholder="Nhập tên mới">
-                    <input type="text" class="form-control" name="lastName" value="{{lastName}}" placeholder="Nhập họ mới">
-                  </div>
-                  <div class="d-flex justify-content-center">
-                      <input type="submit" name="nameUpdate" value="Cập nhập" class="btn btn-success">
-                  </div>
-            </form>
-            
-          </div>
-        </div>
-    </div> -->
