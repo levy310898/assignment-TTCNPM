@@ -227,10 +227,11 @@ def change_password(request,username):
                 new_pass=form.cleaned_data['new_password']
                   #get the current user object as user
                 
-                user.password=new_pass 
-                print('pasword la ' + new_pass + 'user la: ' + user.username)
+                new_pass=form.cleaned_data['new_password']
+                  #get the current user object as user
+                
+                user.set_password(new_pass)
                 user.save()
-                print('password moi la ' + user.password)
                 return HttpResponseRedirect('/home/user=%s/' % username)
         return render(request, 'home/change-password.html', {'form': form})          #do whatever you want to do man..
 
