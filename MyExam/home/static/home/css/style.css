@@ -204,9 +204,12 @@
 .ques-box{
     background-color: #ccc;
     border-radius: 5px;
-    margin-bottom:30px;
     padding:20px 50px;
     position: relative;
+}
+
+.ques-box:not(:last-child){
+    margin-bottom: 30px;
 }
 
 .deleteQuestion{
