@@ -1,5 +1,4 @@
 from django import forms
-
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
@@ -80,7 +79,7 @@ def home(request,username):
         # score_obj = Point.objects.get(key1 = creator, key2 = exam)
         for score in Point.objects.filter(key1 = user,key2 = exam):
             score_obj.append(score)
-        print(score_obj)
+        # print(score_obj)
         score = None
         if score_obj ==[]:
             score = "chưa làm"
@@ -170,12 +169,19 @@ def doTest(request, username, exam_name):
         for i in range(len(chooseAns)):
             if chooseAns[i] == corrAns[i]:
                 no_corr_chooseAns += 1
-        point = Point()
         user = User.objects.get(username = username)
-        point.key1 = user
-        point.key2 = exam
-        point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
-        point.save()
+        point_exist = Point.objects.filter(key1 = user, key2 = exam).exists()
+        if not point_exist:
+            new_point=Point()
+            new_point.key1 = user
+            new_point.key2 = exam
+            new_point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
+            new_point.save()
+        else:
+            point = Point.objects.get(key1 = user, key2 = exam)
+            point.point = "%.2f" % (no_corr_chooseAns/len(corrAns)*10)
+            print(point.point)
+            point.save()
         return HttpResponseRedirect('/home/user=%s/' % username)
     return render(request,'home/do-test.html',context)
 
@@ -239,6 +245,10 @@ def change_password(request,username):
                 new_pass=form.cleaned_data['new_password']
                   #get the current user object as user
                 
+                user.set_password(new_pass) 
+                # print('pasword la ' + new_pass + 'user la: ' + user.username)
+                user.save()
+                # print('password moi la ' + user.password)
                 new_pass=form.cleaned_data['new_password']
                   #get the current user object as user
                 
@@ -295,7 +305,34 @@ def add_my_question(request,username,examname):
             corrAns=data.get('correct',None),
         )
             #return HttpResponse("thêm câu hỏi thành công")
-        return redirect(f'/home/user={username}/exam={exam.examName}/list-question')
+        return redirect('/home/user='+ username + '/my-test')
+
+def logout_view(request):
+    logout(request)
+
+def search(request,username):
+    if request.method == "POST":
+        searchKey = request.POST['searchBox']
+        exams = list(Exam.objects.filter(examName__icontains=searchKey))
+        listExam = list()
+        print("ten ng dung la "+username)
+        for ex in exams:
+            print(ex.examName)
+        ctx={
+            'username':username,
+            'exam':exams
+        }
+        if not exams:
+            ctx['flagEmpty']=True
+        else: 
+            ctx['flagEmpty']=False
+        return render(request,'home/search.html',ctx)
+    
+    return render(request,'home/search.html',)
+
+def newTest(request,username):
+    user = User.objects.get(username = username)
+    return render(request,'home/new-test.html',{'user':user})
 
 
 def list_question(request, user, exam):

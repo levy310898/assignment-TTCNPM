@@ -1,0 +1,14 @@
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="Search..." name="searchBox" required>
+    <button type="submit">Search</button>
+</form>
+{% if flagEmpty %}
+<h1>Khong tim thay thong tin</h1>
+{% else %}
+{%for x in exam%}
+
+<a href="{%url 'do-test' username x.examName %}">{{x.examName}}</a>
+<br>
+{% endfor %}
+{% endif %}

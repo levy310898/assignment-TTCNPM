@@ -182,7 +182,7 @@
 }
 
 .my-exam__exam{
-    margin: 10px 0;
+    margin: 5px 0;
     display:block !important;
     /* background-color: #aaa; */
     font-size:20px !important;
@@ -199,4 +199,44 @@
     background-color: #aaa;
     text-decoration: none;
     color: #f6f6f6 !important;
+}
+
+.ques-box{
+    background-color: #ccc;
+    border-radius: 5px;
+    padding:20px 50px;
+    position: relative;
+}
+
+.ques-box:not(:last-child){
+    margin-bottom: 30px;
+}
+
+.deleteQuestion{
+    position: absolute;
+    top:0px;
+    right:10px;
+    cursor: pointer;
+    font-size:20px;
+}
+
+.deleteQuestion i{
+    transition: all .2s linear;
+}
+
+.deleteQuestion:hover i{
+    color:rgb(40, 164, 180);
+}
+
+#root{
+    background-color:rgb(40, 164, 180);
+    padding:15px;
+    height: 550px;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+
+#noElement{
+    color:#f6f6f6;
+    text-align: center;
 }
