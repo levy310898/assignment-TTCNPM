@@ -330,9 +330,7 @@ def search(request,username):
     
     return render(request,'home/search.html',)
 
-def newTest(request,username):
-    user = User.objects.get(username = username)
-    return render(request,'home/new-test.html',{'user':user})
+
 
 
 def list_question(request, user, exam):
@@ -344,3 +342,31 @@ def list_question(request, user, exam):
 def delete_question(request, pk):
     Question.objects.get(pk=pk).delete()
     return HttpResponse("delete success!")
+
+# def newTest1(request,user,exam):
+#     user = User.objects.get(username = user)
+#     exam = Exam.objects.get(examName = exam)
+#     questions = Question.objects.filter(key = exam)
+#     if request.method == POST:
+
+#     return render(request,"home/new-test.html",{"exam":exam,"questions":questions})
+
+
+# new test
+def newTest(request,username):
+    user = User.objects.get(username = username)
+    if request.method == "POST":
+        questions = request.POST.getlist('question')
+        answerA = request.POST.getlist('answerA')
+        answerB = request.POST.getlist('answerB')
+        answerC = request.POST.getlist('answerC')
+        answerD = request.POST.getlist('answerD')
+        answer  = request.POST.getlist('answer')
+        print("question=" + str(questions))
+        print("answerA= "+ str(answerA))
+        print("answerA= "+ str(answerB))
+        print("answerA= "+ str(answerC))
+        print("answerA= "+ str(answerD))
+        print("answer= "+ str(answer))
+        return HttpResponseRedirect('/home/user=%s/' % username)
+    return render(request,'home/new-test.html',{'user':user})
