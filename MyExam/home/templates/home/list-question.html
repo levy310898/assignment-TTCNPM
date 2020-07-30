@@ -1,11 +1,73 @@
+{% extends "home/base/base-home.html" %}
+
+{% block name %}
+    {{ user.first_name }} {{ user.last_name }}
+{% endblock %}
+
+{% block my-home %}
+    {% url 'home' user.username %}
+{% endblock %}
+
+{% block change-info %}
+    {% url 'info' user.username %}
+{% endblock %}
+
+{% block list-test %}
+{% url 'my-test' user.username %}
+{% endblock %}
+
+{%block change-password %}
+    {% url "change-password" user.username %}
+{% endblock %}
 
 
-{% for question in questions %}
-<ul>
-    <li><a href="{% url 'delete-question' question.pk %}">Delete</a></li>
-    <li>{{question.question}}</li>
-</ul>
-{% endfor %}
+{% block content %}
 
-{% comment %} cho nay ban them cai nut them cau hoi sau nhe {% endcomment %}
-<a href="{% url 'add-question' exam.key.username exam.examName %}">add question</a>
+    <div class="container py-5">
+        <h1 class="text-center">{{ exam.examName}}</h1>
+        {% for question in questions %}
+        <!-- <ul>
+            <li><a href="{% url 'delete-question' question.pk %}">Delete</a></li>
+            <li>{{question.question}}</li>
+        </ul> -->
+        <div class = "ques-box">
+            <div class="form-group row">
+                <label class="col-lg-2 col-md-0">Câu hỏi thứ {{ forloop.counter}}: </label>
+                <input type="text" name="question" value = "{{question.question}}" readonly class="form-control col-lg-10 col-md-12" placeholder="Nhập câu hỏi: ">
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-2 col-md-0">A: </label>
+                <input type="text" name="answerA" value = "{{question.answerA}}" readonly class="form-control col-lg-10 col-md-12" placeholder="Nhập câu trả lời thứ nhất: ">
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-2 col-md-0">B: </label>
+                <input type="text" name="answerB" value = "{{question.answerB}}" readonly class="form-control col-lg-10 col-md-12" placehthứ hai: ">
+            </div>
+            <div class = "form-group row">
+                <label class="col-lg-2 col-md-0">C: </label>
+                <input type="text" name="answerC" value = "{{question.answerC}}" readonly class="form-control col-lg-10 col-md-12" placeholder="Nhập câu trả lời thứ ba: ">
+            </div>
+            <div class = "form-group row">
+                <label class="col-lg-2 col-md-0">D: </label>
+                <input type="text" name="answerD" value = "{{question.answerD}}" readonly class="form-control col-lg-10 col-md-12" placeholder="Nhập câu trả lời thứ tư: ">
+            </div>
+    
+            <div class="form-group"> 
+                <label for="sel1">Đáp án đúng cho câu hỏi:</label>
+                <select class="form-control" name = "answer" id="sel1" aria-readonly="true">
+                    <option value = "{{question.corrAns}}">{{question.corrAns}}</option>
+                </select>
+            </div>
+        </div>
+        {% endfor %}
+    
+        <div class="d-flex justify-content-end px-5">
+            <a class = "btn btn-info px-5 py-2" href="{% url 'delete-test' user.username exam.examName %}">Xóa bài kiểm tra</a>
+        </div>
+    </div>
+    
+
+    {% comment %} cho nay ban them cai nut them cau hoi sau nhe {% endcomment %}
+    
+    
+{% endblock %}

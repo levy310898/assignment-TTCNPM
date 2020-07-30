@@ -270,7 +270,8 @@ def add_my_test(request, username):
     )
     # return redirect('/home/user='+ username +'/my-test/')
     #return render(request,'/home/user=%s/make-test.html' %username)
-    return render(request,'home/make-test.html',{"my_exam":my_exam})
+    #return render(request,'home/make-test.html',{"my_exam":my_exam})
+    return render(request,'home/new-test.html',{"my_exam":my_exam,"user":user})
 
 def add_my_question(request,username,examname):
     try:
@@ -334,10 +335,11 @@ def search(request,username):
 
 
 def list_question(request, user, exam):
+    print("exam= " + exam)
     user = User.objects.get(username=user)
     exam = Exam.objects.get(examName=exam)
     questions = Question.objects.filter(key=exam, key__key=user)
-    return render(request, "home/list-question.html",{"questions": questions, "exam": exam})
+    return render(request, "home/list-question.html",{"user":user,"questions": questions, "exam": exam})
 
 def delete_question(request, pk):
     Question.objects.get(pk=pk).delete()
@@ -353,20 +355,50 @@ def delete_question(request, pk):
 
 
 # new test
-def newTest(request,username):
+def newTest(request,username,examname):
     user = User.objects.get(username = username)
+    exam = Exam.objects.get(examName = examname)
     if request.method == "POST":
         questions = request.POST.getlist('question')
-        answerA = request.POST.getlist('answerA')
-        answerB = request.POST.getlist('answerB')
-        answerC = request.POST.getlist('answerC')
-        answerD = request.POST.getlist('answerD')
-        answer  = request.POST.getlist('answer')
+        ansA = request.POST.getlist('answerA')
+        ansB = request.POST.getlist('answerB')
+        ansC = request.POST.getlist('answerC')
+        ansD = request.POST.getlist('answerD')
+        ans  = request.POST.getlist('answer')
         print("question=" + str(questions))
-        print("answerA= "+ str(answerA))
-        print("answerA= "+ str(answerB))
-        print("answerA= "+ str(answerC))
-        print("answerA= "+ str(answerD))
-        print("answer= "+ str(answer))
-        return HttpResponseRedirect('/home/user=%s/' % username)
-    return render(request,'home/new-test.html',{'user':user})
+        print("answerA= "+ str(ansA))
+        print("answerA= "+ str(ansB))
+        print("answerA= "+ str(ansC))
+        print("answerA= "+ str(ansD))
+        print("answer= "+ str(ans))
+
+        for i in range(len(questions)):
+            my_question = Question.objects.create(
+                key = exam,
+                question = questions[i],
+                answerA = ansA[i],
+                answerB = ansB[i],
+                answerC = ansC[i],
+                answerD = ansD[i],
+                corrAns = ans[i],
+
+            )
+
+        # my_question=Question.objects.create(
+        #     key=exam,
+        #     question=data.get('ques',None),
+        #     answerA=data.get('answerA',None),
+        #     answerB=data.get('answerB',None),
+        #     answerC=data.get('answerC',None),
+        #     answerD=data.get('answerD',None),
+        #     corrAns=data.get('correct',None),
+        # )
+        #return HttpResponseRedirect('/home/user=%s/' % username)
+        return redirect('/home/user='+ username + '/my-test')
+        #return render(request,'home/new-test.html',{'user':user})
+
+def deleteExam(request,username,examname):
+    user = User.objects.get(username = username)
+    exam = Exam.objects.get(examName = examname)
+    exam.delete()
+    return redirect('/home/user='+ username + '/my-test')
