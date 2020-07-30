@@ -94,7 +94,7 @@ def home(request,username):
             "score":score,
         })    
     
-    paginator = Paginator(exams_context, 2) # Show 25 contacts per page.
+    paginator = Paginator(exams_context, 4) # Show 25 contacts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -155,6 +155,7 @@ def doTest(request, username, exam_name):
     context = {
         "exam_name":exam_name,
         'question' : ques,
+        "exam":exam,
     }
     if request.method == 'POST':
         corrAns = []

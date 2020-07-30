@@ -1,5 +1,27 @@
 {% extends 'home/base/base-home.html'%}
 
+{% block name %}
+{{ user.first_name }} {{ user.last_name }}
+{% endblock %}
+
+{% block my-home %}
+    {% url 'home' user.username %}
+{% endblock %}
+
+{% block change-info %}
+{% url 'info' user.username %}
+{% endblock %}
+
+{% block list-test %}
+    {% url 'my-test' user.username %}
+{% endblock %}
+
+
+{%block change-password %}
+{% url "change-password" user.username %}
+{% endblock %}
+
+
 {% block content %}
 <div class="container">
     <h1 class="text-center">{{exam_name}}</h1>
