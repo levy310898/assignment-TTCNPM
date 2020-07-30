@@ -26,7 +26,7 @@ function createQuestion(){
         <div class = "ques-box">
             <div class="form-group row">
                 <label class="col-lg-2 col-md-0">Nhập câu hỏi: </label>
-                <input type="text" name="question" id="" class="form-control col-lg-10 col-md-12" placeholder="Nhập câu hỏi: ">
+                <textarea class="form-control col-lg-10 col-md-12" placeholder="Nhập câu hỏi: " name="question" rows="5" id="comment"></textarea>
             </div>
             <div class="form-group row">
                 <label class="col-lg-2 col-md-0">Nhập câu trả lời A: </label>
