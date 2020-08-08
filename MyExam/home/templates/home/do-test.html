@@ -22,6 +22,11 @@
 {% endblock %}
 
 
+{%block search %}
+{% url 'search' user.username %}
+{% endblock %}
+
+
 {% block content %}
 <div class="container">
     <h1 class="text-center">{{exam_name}}</h1>

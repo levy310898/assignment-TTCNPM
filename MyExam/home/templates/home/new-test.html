@@ -21,6 +21,11 @@
 {% url "change-password" user.username %}
 {% endblock %}
 
+{%block search %}
+{% url 'search' context.user.username %}
+{% endblock %}
+
+
 {% block content %}
     <form method = "POST" action = "{% url 'new-test' user.username my_exam.examName %}"d>
         <h1 class="text-center"> {{my_exam.examName}}</h1>

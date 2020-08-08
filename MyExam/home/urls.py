@@ -17,7 +17,7 @@ urlpatterns = [
     path('home/user=<str:username>/info/', views.info, name='info'),
     path('home/user=<str:username>/change-password/', views.change_password, name='change-password'),
     path('home/user=<str:username>/examname=<str:examname>/add-question/',views.add_my_question,name="add-question"),
-    path('home/user=<str:username>/search/',views.search, name = "search"),
+    path('home/user=<str:username>/search/',views.search, name = 'search'),
     path('home/user=<str:username>/examname=<str:examname>/newTest/',views.newTest,name = "new-test"),
     path('home/user=<str:username>/examname=<str:examname>/deleteTest/',views.deleteExam,name = "delete-test"),
     

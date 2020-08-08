@@ -20,6 +20,11 @@
     {% url "change-password" user.username %}
 {% endblock %}
 
+{%block search %}
+{% url 'search' context.user.username %}
+{% endblock %}
+
+
 
 {% block content %}
 
