@@ -4,7 +4,7 @@ Một website được sử dụng bởi mọi người, là một nơi để b�
 của nhau, giúp cho thầy cô có thể tạo bài kiểm tra cho học sinh làm và học sinh có thể tự ôn tập, kiểm tra kiến thức bản thân thông
 qua việc làm bài kiểm tra.
 # Công nghệ sử dụng
-Framework Django\n
+Framework Django  
 Thư viện Pillow để add avartar
 Boostrap jquerry
 # Cách cài đặt
