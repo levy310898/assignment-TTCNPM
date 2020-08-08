@@ -1,14 +1,51 @@
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" placeholder="Search..." name="searchBox" required>
-    <button type="submit">Search</button>
-</form>
-{% if flagEmpty %}
-<h1>Khong tim thay thong tin</h1>
-{% else %}
-{%for x in exam%}
+{% extends "home/base/base-home.html" %}
 
-<a href="{%url 'do-test' username x.examName %}">{{x.examName}}</a>
-<br>
-{% endfor %}
-{% endif %}
+{% block name %}
+{{ user.first_name }} {{ user.last_name }}
+{% endblock %}
+
+{% block my-home %}
+    {% url 'home' user.username %}
+{% endblock %}
+
+{% block change-info %}
+{% url 'info' user.username %}
+{% endblock %}
+
+{% block list-test %}
+    {% url 'my-test' user.username %}
+{% endblock %}
+
+
+{%block change-password %}
+{% url "change-password" user.username %}
+{% endblock %}
+
+{%block search %}
+{% url 'search' user.username %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- <input type="text" placeholder="Search..." name="searchBox" required>
+            <button type="submit" class = "btn btn-info">Search</button> -->
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search" name="searchBox">
+                <div class="input-group-append">
+                  <button class="btn btn-success" type="submit">Go</button>
+                </div>
+            </div>
+        </form>
+        {% if flagEmpty %}
+        <h1>Không tìm thấy thông tin</h1>
+        {% else %}
+        {%for x in exam%}
+            <a href="{%url 'do-test' user.username x.examName %}" class = "search-item">{{x.examName}}</a>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+{% endblock %}

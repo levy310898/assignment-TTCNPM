@@ -313,15 +313,15 @@ def logout_view(request):
     logout(request)
 
 def search(request,username):
+    user = User.objects.get(username = username)
     if request.method == "POST":
         searchKey = request.POST['searchBox']
         exams = list(Exam.objects.filter(examName__icontains=searchKey))
         listExam = list()
-        print("ten ng dung la "+username)
         for ex in exams:
             print(ex.examName)
         ctx={
-            'username':username,
+            'user':user,
             'exam':exams
         }
         if not exams:
@@ -329,11 +329,10 @@ def search(request,username):
         else: 
             ctx['flagEmpty']=False
         return render(request,'home/search.html',ctx)
-    
-    return render(request,'home/search.html',)
-
-
-
+    ctx = {
+        'user':user,
+    }
+    return render(request,'home/search.html',ctx)
 
 def list_question(request, user, exam):
     print("exam= " + exam)
@@ -353,7 +352,6 @@ def delete_question(request, pk):
 #     if request.method == POST:
 
 #     return render(request,"home/new-test.html",{"exam":exam,"questions":questions})
-
 
 # new test
 def newTest(request,username,examname):
