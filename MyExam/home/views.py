@@ -366,12 +366,6 @@ def newTest(request,username,examname):
         ansC = request.POST.getlist('answerC')
         ansD = request.POST.getlist('answerD')
         ans  = request.POST.getlist('answer')
-        print("question=" + str(questions))
-        print("answerA= "+ str(ansA))
-        print("answerA= "+ str(ansB))
-        print("answerA= "+ str(ansC))
-        print("answerA= "+ str(ansD))
-        print("answer= "+ str(ans))
 
         for i in range(len(questions)):
             my_question = Question.objects.create(
@@ -382,19 +376,8 @@ def newTest(request,username,examname):
                 answerC = ansC[i],
                 answerD = ansD[i],
                 corrAns = ans[i],
-
             )
 
-        # my_question=Question.objects.create(
-        #     key=exam,
-        #     question=data.get('ques',None),
-        #     answerA=data.get('answerA',None),
-        #     answerB=data.get('answerB',None),
-        #     answerC=data.get('answerC',None),
-        #     answerD=data.get('answerD',None),
-        #     corrAns=data.get('correct',None),
-        # )
-        #return HttpResponseRedirect('/home/user=%s/' % username)
         return redirect('/home/user='+ username + '/my-test')
         #return render(request,'home/new-test.html',{'user':user})
 
