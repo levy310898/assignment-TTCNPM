@@ -21,6 +21,9 @@
                         <!-- <a href="{%block change-pass%}  {% endblock %}" class="user-link">Đổi mật khẩu</a> -->
                     </li>
                     <li class="user-item">
+                        <a href="{% block search %}{% endblock %}" class="user-link">Tìm kiếm</a>
+                    </li>
+                    <li class="user-item">
                         <a href="{% url 'logout'%}" class="user-link">Đăng xuất</a>
                     </li>
                 </ul>
