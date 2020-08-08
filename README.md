@@ -11,10 +11,10 @@ Boostrap jquerry
 Project được chạy trên hệ điều hành Window  
 Phiên bản Python từ 3.x.x trở đi  
 Câu lệnh cài Django:  
-    `python -m pip install Django`
+    `python -m pip install Django`  
 Câu lệnh cài Pillow:  
-    `python3 -m pip install --upgrade pip`
-    `python3 -m pip install --upgrade Pillow`
+    `python3 -m pip install --upgrade pip`  
+    `python3 -m pip install --upgrade Pillow`  
 Khi chạy chương trình, phải chuyển directory tới folder MyExam, rồi gõ câu lệnh:  
     `python manage.py runserver`
 
